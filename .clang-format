@@ -1,0 +1,14 @@
+Language: Cpp
+BasedOnStyle: Google
+DerivePointerAlignment: false
+IndentPPDirectives: AfterHash
+Cpp11BracedListStyle: false
+AlwaysBreakTemplateDeclarations: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: true
+SpaceAfterTemplateKeyword: false
+ColumnLimit: 80
+AlignAfterOpenBracket: DontAlign
+ContinuationIndentWidth: 4
+IndentWidth: 2
