@@ -1,28 +1,40 @@
+#include <limits.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-void insertion_sort(int* values, size_t n) {
-  int j, key;
-
-  for (int i = 1; i < n; ++i) {
-    key = values[i];
-
-    for (j = i - 1; j >= 0 && values[j] > key; --j) {
-      values[j + 1] = values[j];
+char* strchrx(register const char* s, int c) {
+  do {
+    if (*s == c) {
+      return (char*)s;
     }
+  } while (*s++);
+  return (0);
+}
 
-    values[j + 1] = key;
-  }
+char* get(char* value, const char* seperators) {
+  int seperator_index = strchrx(value, ',') - value;
+
+  char* result = malloc(seperator_index);
+  memcpy(result, value, seperator_index);
+  result[seperator_index] = '\0';
+
+  return result;
 }
 
 int main() {
-  int values[] = { 5, 67, 3, 1, 6, 7, 8, 3, 34, 67, 34, 12, 45, 343 };
-  size_t n = sizeof(values) / sizeof(values[0]);
+  const char seperators[] = { ',', ' ' };
 
-  insertion_sort(values, n);
+  clock_t t = clock();
 
-  for (int i = 0; i < n; ++i) {
-    printf("%d ", values[i]);
+  for (size_t i = 0; i < LONG_MAX; ++i) {
+    free(get("213.14.79.242, 40.68.59.123:32822", seperators));
   }
 
-  puts("");
+  float elapsed_seconds = (((double)(clock() - t)) / CLOCKS_PER_SEC);
+
+  printf("%f seconds to execute \n", elapsed_seconds);
+
+  return 0;
 }
