@@ -15,7 +15,7 @@ void insertion_sort(int* values, size_t n) {
 }
 
 int main() {
-  int values[] = {5, 67, 3, 1, 6, 7, 8, 3, 34, 67, 34, 12, 45, 343};
+  int values[] = { 5, 67, 3, 1, 6, 7, 8, 3, 34, 67, 34, 12, 45, 343 };
   size_t n = sizeof(values) / sizeof(values[0]);
 
   insertion_sort(values, n);
