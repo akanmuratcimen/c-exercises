@@ -10,3 +10,6 @@ clean:
 
 run:
 	./bin/main
+
+check: 
+	valgrind ./bin/main
