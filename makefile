@@ -3,12 +3,10 @@ CFLAGS = -Wall -g -I inc
 
 main: src/main.c
 	@mkdir -p bin
-	$(CC) src/main.c src/linked_list.c -o bin/main $(CFLAGS)
+	@ $(CC) src/main.c src/linked_list.c -o bin/main $(CFLAGS)
 
 clean:
-	rm -rf bin
+	@rm -rf bin
 
-run: 
+run:
 	./bin/main
-
-.PHONY: main
