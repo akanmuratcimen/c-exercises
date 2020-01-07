@@ -1,4 +1,5 @@
 #include <limits.h>
+#include <memory.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +18,7 @@ char* get(char* value, const char* seperators) {
   int seperator_index = strchrx(value, ',') - value;
 
   char* result = malloc(seperator_index);
-  memcpy(result, value, seperator_index);
+  memcpy(result, &value, seperator_index);
   result[seperator_index] = '\0';
 
   return result;
