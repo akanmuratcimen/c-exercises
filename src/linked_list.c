@@ -63,3 +63,11 @@ node_t* convert_to_linked_list(const int* const values, const size_t length) {
 
   return head;
 }
+
+void linked_list_remove_duplicates(const node_t* node) {
+  if (node == NULL) {
+    return;
+  }
+
+  
+}

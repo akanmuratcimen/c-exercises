@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "memory.h": "c",
-        "linked_list.h": "c"
+        "linked_list.h": "c",
+        "hash_table.h": "c"
     }
 }

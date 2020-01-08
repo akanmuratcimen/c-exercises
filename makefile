@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -g -I inc
+CFLAGS = -Wall -O3 -g -I inc
 
 main: src/main.c
 	@mkdir -p bin

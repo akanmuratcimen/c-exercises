@@ -1,11 +1,19 @@
+#include "hash_table.h"
 #include "linked_list.h"
 
 int main() {
-  int values[] = { 1, 2, 3, 4, 5 };
-  node_t* head = convert_to_linked_list(values, sizeof(values) / sizeof(int));
+  ht_t* ht = ht_create();
 
-  linked_list_print(head);
-  linked_list_clear(&head);
+  ht_set(ht, "name1", "em");
+  ht_set(ht, "name2", "russian");
+  ht_set(ht, "name3", "pizza");
+  ht_set(ht, "name4", "doge");
+  ht_set(ht, "name5", "pyro");
+  ht_set(ht, "name6", "joost");
+  ht_set(ht, "name7", "kalix");
+
+  ht_dump(ht);
+  ht_destroy(ht);
 
   return 0;
 }
