@@ -1,15 +1,24 @@
 CC = clang
 CFLAGS = -Wall -O3 -I inc
+SRCFILES = $(wildcard src/*.c)
+OUTPUT = bin/main
 
 main: src/main.c
 	@mkdir -p bin
-	@$(CC) src/main.c src/linked_list.c src/hashtable.c -o bin/main $(CFLAGS)
+	@$(CC) $(SRCFILES) -o $(OUTPUT) $(CFLAGS)
 
 clean:
-	@rm -rf bin
+	@rm -rf bin asm
 
 run:
-	./bin/main
+	./$(OUTPUT)
 
 check: 
-	valgrind ./bin/main
+	valgrind ./$(OUTPUT)
+
+.PHONY: asm
+
+asm:
+	@$(CC) $(SRCFILES) -S -mllvm --x86-asm-syntax=intel -g $(CFLAGS)
+	@mkdir -p asm
+	@mv *.s asm
