@@ -1,5 +1,4 @@
 typedef struct ht_entry_t {
-  
   char* key;
   char* value;
   struct ht_entry_t* next;
