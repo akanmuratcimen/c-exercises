@@ -5,10 +5,10 @@
 #include "hashtable.h"
 
 int main() {
-  const int size = 20;
+  const unsigned long size = 64L;
   ht_t* ht = ht_create(size * 3);
 
-  for (unsigned long i = 0; i < size; i++) {
+  for (unsigned long i = 0; i < size; ++i) {
     char name[20];
 
     sprintf(name, "%lu", i);

@@ -5,12 +5,12 @@
 
 #include "hashtable.h"
 
-static unsigned int hash(const char* key, const int mod) {
+static unsigned long hash(const char* key, const unsigned long mod) {
   unsigned long hash = 5381;
   int c;
 
   while ((c = *key++)) {
-    hash = ((hash << 5) + hash) + c;
+    hash = ((hash << 5) + hash) + (unsigned long)c;
   }
 
   return hash % mod;
@@ -30,12 +30,12 @@ ht_entry_t* ht_pair(const char* key, const char* value) {
   return entry;
 }
 
-ht_t* ht_create(int size) {
+ht_t* ht_create(const unsigned long size) {
   ht_t* hashtable = malloc(sizeof(ht_t));
 
   hashtable->entries = malloc(sizeof(ht_entry_t*) * size);
 
-  for (int i = 0; i < size; ++i) {
+  for (unsigned long i = 0; i < size; ++i) {
     hashtable->entries[i] = NULL;
   }
 
@@ -45,7 +45,7 @@ ht_t* ht_create(int size) {
 }
 
 void ht_set(ht_t* hashtable, const char* key, const char* value) {
-  unsigned int slot = hash(key, hashtable->size);
+  unsigned long slot = hash(key, hashtable->size);
 
   ht_entry_t* entry = hashtable->entries[slot];
 
@@ -68,7 +68,10 @@ void ht_set(ht_t* hashtable, const char* key, const char* value) {
     entry = prev->next;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconditional-uninitialized"
   prev->next = ht_pair(key, value);
+#pragma clang diagnostic pop
 }
 
 char* ht_get(ht_t* hashtable, const char* key) {
@@ -90,7 +93,7 @@ char* ht_get(ht_t* hashtable, const char* key) {
 }
 
 void ht_del(ht_t* hashtable, const char* key) {
-  unsigned int bucket = hash(key, hashtable->size);
+  unsigned long bucket = hash(key, hashtable->size);
 
   ht_entry_t* entry = hashtable->entries[bucket];
 
@@ -112,7 +115,10 @@ void ht_del(ht_t* hashtable, const char* key) {
       }
 
       if (entry->next == NULL && idx != 0) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconditional-uninitialized"
         prev->next = NULL;
+#pragma clang diagnostic pop
       }
 
       if (entry->next != NULL && idx != 0) {
@@ -133,8 +139,8 @@ void ht_del(ht_t* hashtable, const char* key) {
   }
 }
 
-void ht_dump(ht_t* hashtable) {
-  for (int i = 0; i < hashtable->size; ++i) {
+void ht_dump(const ht_t* hashtable) {
+  for (unsigned int i = 0; i < hashtable->size; ++i) {
     ht_entry_t* entry = hashtable->entries[i];
 
     if (entry == NULL) {
@@ -158,7 +164,7 @@ void ht_dump(ht_t* hashtable) {
 }
 
 void ht_destroy(ht_t* hashtable) {
-  for (int i = 0; i < hashtable->size; ++i) {
+  for (unsigned int i = 0; i < hashtable->size; ++i) {
     ht_entry_t* entry = hashtable->entries[i];
 
     if (entry == NULL) {

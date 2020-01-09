@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -O3 -I inc
+CFLAGS = -W -Wall -O3 -I inc -std=c11 -pedantic
 SRCFILES = $(wildcard src/*.c)
 OUTPUT = bin/main
 
@@ -16,9 +16,9 @@ run:
 check: 
 	valgrind ./$(OUTPUT)
 
-.PHONY: asm
-
 asm:
 	@$(CC) $(SRCFILES) -S -mllvm --x86-asm-syntax=intel -g $(CFLAGS)
 	@mkdir -p asm
 	@mv *.s asm
+
+.PHONY: asm
