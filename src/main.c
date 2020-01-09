@@ -1,16 +1,19 @@
-#include "hash_table.h"
-#include "linked_list.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "hashtable.h"
 
 int main() {
-  ht_t* ht = ht_create();
+  const int size = 20;
+  ht_t* ht = ht_create(size * 3);
 
-  ht_set(ht, "name1", "em");
-  ht_set(ht, "name2", "russian");
-  ht_set(ht, "name3", "pizza");
-  ht_set(ht, "name4", "doge");
-  ht_set(ht, "name5", "pyro");
-  ht_set(ht, "name6", "joost");
-  ht_set(ht, "name7", "kalix");
+  for (unsigned long i = 0; i < size; i++) {
+    char name[20];
+
+    sprintf(name, "%lu", i);
+    ht_set(ht, name, "foobar");
+  }
 
   ht_dump(ht);
   ht_destroy(ht);

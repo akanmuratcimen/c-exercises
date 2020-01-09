@@ -1,9 +1,9 @@
 CC = clang
-CFLAGS = -Wall -O3 -g -I inc
+CFLAGS = -Wall -O3 -I inc
 
 main: src/main.c
 	@mkdir -p bin
-	@$(CC) src/main.c src/linked_list.c -o bin/main $(CFLAGS)
+	@$(CC) src/main.c src/linked_list.c src/hashtable.c -o bin/main $(CFLAGS)
 
 clean:
 	@rm -rf bin

@@ -2,6 +2,18 @@
     "files.associations": {
         "memory.h": "c",
         "linked_list.h": "c",
-        "hash_table.h": "c"
+        "hash_table.h": "c",
+        "typeinfo": "cpp",
+        "hashtable.h": "c",
+        "stdlib.h": "c",
+        "optional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "system_error": "c",
+        "array": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "sstream": "c"
     }
 }
