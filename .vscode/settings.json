@@ -22,6 +22,7 @@
         "memory": "c",
         "string_view": "c",
         "string": "c",
-        "utility.h": "c"
+        "utility.h": "c",
+        "hashmap_int.h": "c"
     }
 }
