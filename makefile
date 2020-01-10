@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -W -Wall -O3 -I inc -std=c11 -pedantic
+CFLAGS = -W -Wall -O3 -I inc -std=c11 -pedantic -lm
 SRCFILES = $(wildcard src/*.c)
 OUTPUT = bin/main
 
@@ -13,7 +13,7 @@ clean:
 run:
 	./$(OUTPUT)
 
-check: 
+check:
 	valgrind ./$(OUTPUT)
 
 asm:

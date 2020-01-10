@@ -21,6 +21,7 @@
         "functional": "c",
         "memory": "c",
         "string_view": "c",
-        "string": "c"
+        "string": "c",
+        "utility.h": "c"
     }
 }

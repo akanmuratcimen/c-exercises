@@ -1,4 +1,6 @@
 #include "linkedlist.h"
+#include "hashtable.h"
+#include "utility.h"
 
 void linkedlist_print(const node_t* head) {
   while (head != NULL) {
@@ -62,12 +64,4 @@ node_t* convert_to_linkedlist(const int* const values, const size_t length) {
   }
 
   return head;
-}
-
-void linkedlist_remove_duplicates(const node_t* node) {
-  if (node == NULL) {
-    return;
-  }
-
-  
 }

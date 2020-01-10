@@ -4,17 +4,7 @@
 #include <string.h>
 
 #include "hashtable.h"
-
-static unsigned long hash(const char* key, const unsigned long mod) {
-  unsigned long hash = 5381;
-  int c;
-
-  while ((c = *key++)) {
-    hash = ((hash << 5) + hash) + (unsigned long)c;
-  }
-
-  return hash % mod;
-}
+#include "utility.h"
 
 ht_entry_t* ht_pair(const char* key, const char* value) {
   ht_entry_t* entry = malloc(sizeof(ht_entry_t));
