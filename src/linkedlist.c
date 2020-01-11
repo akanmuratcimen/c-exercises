@@ -1,5 +1,4 @@
 #include "linkedlist.h"
-#include "hashtable.h"
 #include "utility.h"
 
 void linkedlist_print(const node_t* head) {

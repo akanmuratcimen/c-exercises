@@ -13,9 +13,7 @@ bool is_prime(const unsigned int n) {
     return n == 2;
   }
 
-  unsigned int i, limit = sqrt(n);
-
-  for (i = 3; i <= limit; i += 2) {
+  for (unsigned int i = 3; i <= sqrt(n); i += 2) {
     if (n % i == 0) {
       return false;
     }
@@ -25,27 +23,25 @@ bool is_prime(const unsigned int n) {
 }
 
 unsigned int next_prime(unsigned int n) {
-  unsigned int c;
-
   if (n < 13) {
-    c = 13;
-  } else if (n & 1) {
-    n += 2;
-    c = is_prime(n) ? n : next_prime(n);
-  } else {
-    c = next_prime(n - 1);
+    return 13;
   }
 
-  return c;
+  if (n & 1) {
+    n += 2;
+    return is_prime(n) ? n : next_prime(n);
+  }
+
+  return next_prime(n - 1);
 }
 
-inline static int get_slot(const unsigned int size, const int key) {
+inline static int hash(const unsigned int size, const int key) {
   return key % size;
 }
 
-map_int_t* map_int_create(void) {
+map_int_t* map_int_create(const int initial_size) {
   map_int_t* map = malloc(sizeof(map_int_t));
-  const unsigned int size = next_prime(0);
+  const unsigned int size = initial_size == 0 ? next_prime(0) : initial_size;
 
   map->entries = malloc(sizeof(map_int_entry_t) * size);
 
@@ -58,21 +54,26 @@ map_int_t* map_int_create(void) {
   return map;
 }
 
-map_int_entry_t* create_map_int_entry(const int key, const int value) {
+map_int_entry_t* map_int_create_entry(const int key, const int value) {
   map_int_entry_t* entry = (map_int_entry_t*)malloc(sizeof(map_int_entry_t));
+
+  if (entry == NULL) {
+    return NULL;
+  }
 
   entry->key = key;
   entry->value = value;
+  entry->next = NULL;
 
   return entry;
 }
 
 void map_int_set(const map_int_t* map_int, const int key, const int value) {
-  const unsigned int slot = get_slot(map_int->size, key);
+  const unsigned int slot = hash(map_int->size, key);
   map_int_entry_t* entry = map_int->entries[slot];
 
   if (entry == NULL) {
-    map_int->entries[slot] = create_map_int_entry(key, value);
+    map_int->entries[slot] = map_int_create_entry(key, value);
 
     return;
   }
@@ -89,12 +90,16 @@ void map_int_set(const map_int_t* map_int, const int key, const int value) {
     entry = prev->next;
   }
 
-  prev->next = create_map_int_entry(key, value);
+  if (prev == NULL) {
+    return;
+  }
+
+  prev->next = map_int_create_entry(key, value);
 }
 
 inline static map_int_entry_t* map_int_get_entry(
     const map_int_t* map_int, const int key) {
-  const unsigned int slot = get_slot(map_int->size, key);
+  const unsigned int slot = hash(map_int->size, key);
   map_int_entry_t* entry = map_int->entries[slot];
 
   while (entry != NULL) {
@@ -126,6 +131,8 @@ void map_int_inc_value(const map_int_t* map_int, const int key) {
   map_int_entry_t* entry = map_int_get_entry(map_int, key);
 
   if (entry == NULL) {
+    map_int_set(map_int, key, 1);
+
     return;
   }
 
@@ -136,6 +143,8 @@ void map_int_dec_value(const map_int_t* map_int, const int key) {
   map_int_entry_t* entry = map_int_get_entry(map_int, key);
 
   if (entry == NULL) {
+    map_int_set(map_int, key, -1);
+
     return;
   }
 
@@ -143,7 +152,7 @@ void map_int_dec_value(const map_int_t* map_int, const int key) {
 }
 
 void map_int_del(const map_int_t* map_int, const int key) {
-  const unsigned int slot = get_slot(map_int->size, key);
+  const unsigned int slot = hash(map_int->size, key);
   map_int_entry_t* entry = map_int->entries[slot];
 
   if (entry == NULL) {
@@ -161,7 +170,7 @@ void map_int_del(const map_int_t* map_int, const int key) {
         } else if (entry->next != NULL) {
           map_int->entries[slot] = entry->next;
         }
-      } else {
+      } else if (prev != NULL) {
         if (entry->next != NULL) {
           prev->next = entry->next;
         } else if (entry->next == NULL) {
@@ -178,6 +187,43 @@ void map_int_del(const map_int_t* map_int, const int key) {
     entry = prev->next;
 
     ++idx;
+  }
+}
+
+void map_int_destroy(map_int_t* map_int) {
+  for (unsigned int i = 0; i < map_int->size; ++i) {
+    map_int_entry_t* entry = map_int->entries[i];
+
+    while (entry != NULL) {
+      map_int_entry_t* next = entry->next;
+
+      free(entry);
+
+      entry = next;
+    }
+  }
+
+  free(map_int->entries);
+  free(map_int);
+}
+
+void map_int_dump(const map_int_t* map_int) {
+  for (unsigned int i = 0; i < map_int->size; ++i) {
+    map_int_entry_t* entry = map_int->entries[i];
+
+    if (entry == NULL) {
+      continue;
+    }
+
+    for (;;) {
+      printf("%d: %d\n", entry->key, entry->value);
+
+      if (entry->next == NULL) {
+        break;
+      }
+
+      entry = entry->next;
+    }
   }
 }
 

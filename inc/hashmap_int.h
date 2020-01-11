@@ -14,7 +14,7 @@ typedef struct map_int_t {
   map_int_entry_t** entries;
 } map_int_t;
 
-map_int_t* map_int_create(void);
+map_int_t* map_int_create(const int initial_size);
 
 void map_int_set(const map_int_t* map_int, const int key, const int value);
 bool map_int_is_key_exists(const map_int_t* map_int, const int key);
@@ -24,5 +24,8 @@ void map_int_inc_value(const map_int_t* map_int, const int key);
 void map_int_dec_value(const map_int_t* map_int, const int key);
 
 void map_int_del(const map_int_t* map_int, const int key);
+void map_int_destroy(map_int_t* map_int);
+
+void map_int_dump(const map_int_t* map_int);
 
 #endif // HASHMAP_INT_H
