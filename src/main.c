@@ -17,5 +17,5 @@ int main() {
 
   // map_int_destroy(map_int);
 
-  return 0;
+  return EXIT_SUCCESS;
 }

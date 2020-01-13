@@ -73,66 +73,29 @@ map_int_entry_t* map_int_create_entry(const int key, const int value) {
   return entry;
 }
 
-void map_int_copy_values(map_int_t* src, map_int_t* dest) {
-  for (unsigned int i = 0; i < src->capacity; ++i) {
-    map_int_entry_t* src_entry = src->entries[i];
+void growth_capacity(map_int_t* map_int) {
+  const unsigned int old_capacity = map_int->capacity;
+  const unsigned int new_capacity = old_capacity * 2;
+  
+  map_int_entry_t** old_entries = map_int->entries;
 
-    if (src_entry == NULL) {
-      continue;
+  map_int->entries = malloc(sizeof(map_int_entry_t) * new_capacity);
+  map_int->capacity = new_capacity;
+
+  for (unsigned int i = 0; i < map_int->capacity; ++i) {
+    map_int_entry_t* entry = old_entries[i];
+
+    while (entry) {
+      map_int_entry_t* next = entry->next;
+      const unsigned int new_hash = hash(new_capacity, entry->key);
+
+      entry = next;
     }
-
-    const unsigned int slot = hash(dest->capacity, src_entry->key);
-    map_int_entry_t* dest_entry = dest->entries[slot];
-
-    if (dest_entry == NULL) {
-      dest->entries[slot] =
-          map_int_create_entry(src_entry->key, src_entry->value);
-
-      dest->entry_count++;
-
-      continue;
-    }
-
-    // map_int_entry_t* prev;
-
-    // while (src_entry != NULL) {
-    //   if (dest_entry->key == src_entry->key) {
-    //     break;
-    //   }
-
-    //   prev = src_entry;
-    //   src_entry = prev->next;
-    // }
-
-    // if (prev == NULL) {
-    //   return;
-    // }
-
-    // prev->next = map_int_create_entry(src_entry->key, src_entry->value);
-    // dest->entry_count++;
-  }
-}
-
-void growth_capacity(map_int_t** map_int) {
-  map_int_t* new_map_int = (map_int_t*)malloc(sizeof(map_int_t));
-
-  printf("old capacity: %d\n", (*map_int)->capacity);
-
-  const unsigned int new_capacity = (*map_int)->capacity * 2;
-
-  new_map_int->entries = malloc(sizeof(map_int_entry_t) * new_capacity);
-
-  for (unsigned int i = 0; i < new_capacity; ++i) {
-    new_map_int->entries[i] = NULL;
   }
 
-  new_map_int->capacity = new_capacity;
-  new_map_int->entry_count = 0;
+  free(old_entries);
 
-  map_int_copy_values(*map_int, new_map_int);
-  map_int_destroy(*map_int);
-
-  *map_int = new_map_int;
+  printf("new_capacity: %d\n", new_capacity);
 }
 
 void map_int_set(map_int_t* map_int, const int key, const int value) {
@@ -141,12 +104,8 @@ void map_int_set(map_int_t* map_int, const int key, const int value) {
 
   if (entry == NULL) {
     if (should_growth_capacity(map_int) == true) {
-      growth_capacity(&map_int);
+      growth_capacity(map_int);
     }
-
-    printf("aa: %d\n", key);
-
-    assert(map_int != NULL);
 
     map_int->entries[slot] = map_int_create_entry(key, value);
     map_int->entry_count++;
@@ -172,14 +131,8 @@ void map_int_set(map_int_t* map_int, const int key, const int value) {
   }
 
   if (should_growth_capacity(map_int) == true) {
-    growth_capacity(&map_int);
+    growth_capacity(map_int);
   }
-
-       printf("aa: %d\n", key);
-
-
-
-  assert(map_int != NULL);
 
   prev->next = map_int_create_entry(key, value);
   map_int->entry_count++;
