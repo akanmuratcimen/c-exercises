@@ -23,6 +23,18 @@
         "string_view": "c",
         "string": "c",
         "utility.h": "c",
-        "hashmap_int.h": "c"
+        "hashmap_int.h": "c",
+        "stdbool.h": "c",
+        "atomic": "c",
+        "deque": "c",
+        "algorithm": "c",
+        "memory_resource": "c",
+        "fstream": "c",
+        "initializer_list": "c",
+        "stdexcept": "c",
+        "new": "c",
+        "cstdbool": "c",
+        "c++config.h": "c",
+        "assert.h": "c"
     }
 }
