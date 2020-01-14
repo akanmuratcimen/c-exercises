@@ -49,18 +49,28 @@ void map_int_allocate_entries(map_int_t* map, const unsigned int capacity) {
   map->capacity = capacity;
 }
 
-map_int_t* map_int_create(const int initial_capacity) {
+map_int_t* map_int_create(const unsigned int initial_capacity) {
   map_int_t* map = malloc(sizeof(map_int_t));
+  const unsigned int prime_capacity = next_prime(initial_capacity);
 
-  map_int_allocate_entries(map, next_prime(initial_capacity));
+  map_int_allocate_entries(map, prime_capacity);
 
   map->entry_count = 0;
+  map->initial_capacity = prime_capacity;
 
   return map;
 }
 
 bool should_growth_capacity(const map_int_t* map) {
   return map->entry_count >= map->capacity * load_factor;
+}
+
+bool should_shrink_capacity(const map_int_t* map) {
+  if (map->initial_capacity == map->capacity) {
+    return false;
+  }
+
+  return map->entry_count <= (map->capacity * load_factor) / 2;
 }
 
 map_int_entry_t* map_int_create_entry(const int key, const int value) {
@@ -77,13 +87,14 @@ map_int_entry_t* map_int_create_entry(const int key, const int value) {
   return entry;
 }
 
-void map_int_growth_capacity(map_int_t* map) {
+void map_int_change_capacity(map_int_t* map, const unsigned int capacity) {
   const unsigned int old_capacity = map->capacity;
-  const unsigned int new_capacity = next_prime(old_capacity * 2);
+
+  printf("capacity change: %d to %d\n", old_capacity, capacity);
 
   map_int_entry_t** old_entries = map->entries;
 
-  map_int_allocate_entries(map, new_capacity);
+  map_int_allocate_entries(map, capacity);
 
   for (unsigned int i = 0; i < old_capacity; ++i) {
     map_int_entry_t* old_entry = old_entries[i];
@@ -96,14 +107,11 @@ void map_int_growth_capacity(map_int_t* map) {
       if (new_entry == NULL) {
         map->entries[slot] =
             map_int_create_entry(old_entry->key, old_entry->value);
+
       } else {
         map_int_entry_t* prev_new_entry = NULL;
 
         while (new_entry) {
-          if (new_entry->next == NULL) {
-            break;
-          }
-
           prev_new_entry = new_entry;
           new_entry = new_entry->next;
         }
@@ -126,7 +134,7 @@ void map_int_set(map_int_t* map, const int key, const int value) {
 
   if (entry == NULL) {
     if (should_growth_capacity(map)) {
-      map_int_growth_capacity(map);
+      map_int_change_capacity(map, next_prime(map->capacity * 2));
     }
 
     map->entries[slot] = map_int_create_entry(key, value);
@@ -153,7 +161,7 @@ void map_int_set(map_int_t* map, const int key, const int value) {
   }
 
   if (should_growth_capacity(map)) {
-    map_int_growth_capacity(map);
+    map_int_change_capacity(map, next_prime(map->capacity * 2));
   }
 
   prev->next = map_int_create_entry(key, value);
@@ -243,6 +251,10 @@ void map_int_del(map_int_t* map, const int key) {
 
       free(entry);
       map->entry_count--;
+
+      if (should_shrink_capacity(map)) {
+        map_int_change_capacity(map, next_prime(map->capacity / 2));
+      }
 
       return;
     }

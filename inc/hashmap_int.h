@@ -11,13 +11,14 @@ typedef struct map_int_entry_t {
 
 typedef struct map_int_t {
   unsigned int capacity;
+  unsigned int initial_capacity;
   unsigned int entry_count;
   map_int_entry_t** entries;
 } map_int_t;
 
 extern const float load_factor;
 
-map_int_t* map_int_create(const int initial_capacity);
+map_int_t* map_int_create(const unsigned int initial_capacity);
 
 void map_int_set(map_int_t* map, const int key, const int value);
 bool map_int_is_key_exists(const map_int_t* map, const int key);

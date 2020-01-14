@@ -8,8 +8,12 @@
 int main() {
   map_int_t* map_int = map_int_create(0);
 
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 100; ++i) {
     map_int_set(map_int, i, i);
+  }
+
+  for (int i = 0; i < 90; ++i) {
+    map_int_del(map_int, i);
   }
 
   map_int_dump(map_int);
