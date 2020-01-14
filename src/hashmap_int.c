@@ -6,7 +6,7 @@
 
 #include "hashmap_int.h"
 
-const float load_factor = 0.75;
+const float load_factor = 0.8;
 
 bool is_prime(const unsigned int n) {
   if ((n & 1) == 0) {
@@ -75,27 +75,46 @@ map_int_entry_t* map_int_create_entry(const int key, const int value) {
 
 void growth_capacity(map_int_t* map_int) {
   const unsigned int old_capacity = map_int->capacity;
-  const unsigned int new_capacity = old_capacity * 2;
-  
+  const unsigned int new_capacity = next_prime(old_capacity * 2);
+
   map_int_entry_t** old_entries = map_int->entries;
 
   map_int->entries = malloc(sizeof(map_int_entry_t) * new_capacity);
   map_int->capacity = new_capacity;
 
-  for (unsigned int i = 0; i < map_int->capacity; ++i) {
-    map_int_entry_t* entry = old_entries[i];
+  for (unsigned int i = 0; i < old_capacity; ++i) {
+    map_int_entry_t* old_entry = old_entries[i];
 
-    while (entry) {
-      map_int_entry_t* next = entry->next;
-      const unsigned int new_hash = hash(new_capacity, entry->key);
+    while (old_entry) {
+      map_int_entry_t* old_entry_next = old_entry->next;
+      const unsigned int slot = hash(new_capacity, old_entry->key);
+      map_int_entry_t* new_entry = map_int->entries[slot];
 
-      entry = next;
+      if (new_entry == NULL) {
+        map_int->entries[slot] =
+            map_int_create_entry(old_entry->key, old_entry->value);
+      } else {
+        map_int_entry_t* prev_new_entry;
+
+        while (new_entry) {
+          if (new_entry->next == NULL) {
+            break;
+          }
+
+          prev_new_entry = new_entry;
+          new_entry = new_entry->next;
+        }
+
+        prev_new_entry->next =
+            map_int_create_entry(old_entry->key, old_entry->value);
+      }
+
+      free(old_entry);
+      old_entry = old_entry_next;
     }
   }
 
   free(old_entries);
-
-  printf("new_capacity: %d\n", new_capacity);
 }
 
 void map_int_set(map_int_t* map_int, const int key, const int value) {
@@ -115,7 +134,7 @@ void map_int_set(map_int_t* map_int, const int key, const int value) {
 
   map_int_entry_t* prev;
 
-  while (entry != NULL) {
+  while (entry) {
     if (entry->key == key) {
       entry->value = value;
 
@@ -143,7 +162,7 @@ inline static map_int_entry_t* map_int_get_entry(
   const unsigned int slot = hash(map_int->capacity, key);
   map_int_entry_t* entry = map_int->entries[slot];
 
-  while (entry != NULL) {
+  while (entry) {
     if (entry->key == key) {
       return entry;
     }
@@ -203,7 +222,7 @@ void map_int_del(map_int_t* map_int, const int key) {
   int idx = 0;
   map_int_entry_t* prev;
 
-  while (entry != NULL) {
+  while (entry) {
     if (entry->key == key) {
       if (idx == 0) {
         if (entry->next == NULL) {
@@ -236,7 +255,7 @@ void map_int_destroy(map_int_t* map_int) {
   for (unsigned int i = 0; i < map_int->capacity; ++i) {
     map_int_entry_t* entry = map_int->entries[i];
 
-    while (entry != NULL) {
+    while (entry) {
       map_int_entry_t* next = entry->next;
 
       free(entry);
@@ -257,8 +276,10 @@ void map_int_dump(const map_int_t* map_int) {
       continue;
     }
 
+    printf("[%d]:", entry->key);
+
     for (;;) {
-      printf("%d: %d\n", entry->key, entry->value);
+      printf(" %d:%d", entry->key, entry->value);
 
       if (entry->next == NULL) {
         break;
@@ -266,5 +287,7 @@ void map_int_dump(const map_int_t* map_int) {
 
       entry = entry->next;
     }
+
+    printf("\n");
   }
 }

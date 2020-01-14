@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -W -Wall -Werror -I inc -std=c11 -g -pedantic -lm
+CFLAGS = -W -Wall -Werror -I inc -std=c11 -O3 -pedantic -lm
 SRCFILES = $(wildcard src/*.c)
 OUTPUT = bin/main
 
