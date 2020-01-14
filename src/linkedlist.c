@@ -1,4 +1,5 @@
 #include "linkedlist.h"
+#include "hashmap_int.h"
 #include "utility.h"
 
 void linkedlist_print(const node_t* head) {
@@ -65,22 +66,25 @@ node_t* convert_to_linkedlist(const int* values, const size_t length) {
   return head;
 }
 
+void linkedlist_remove_duplicates(node_t* node) {
+  map_int_t* map = map_int_create(0);
+  node_t* prev = NULL;
 
-// void linkedlist_remove_duplicates(node_t* node) {
-//   map_int map[100];
-//   node_t* current = node;
+  while (node) {
+    if (map_int_is_key_exists(map, node->value)) {
+      node_t* next = node->next;
+      prev->next = next;
+      free(node);
+      node = next;
 
-//   while (current != NULL) {
-    
-//     map[current->value].value++;
-//     current = current->next;
-//   }
+      continue;
+    }
 
-//   for (int i = 0; i < 100; ++i) {
-//     if (map[i].key == 0) {
-//       continue;
-//     }
+    map_int_inc_value(map, node->value);
 
-//     printf("%d %d", map[i].key, map[i].value);
-//   }
-// }
+    prev = node;
+    node = node->next;
+  }
+
+  map_int_destroy(map);
+}

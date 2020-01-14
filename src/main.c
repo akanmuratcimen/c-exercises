@@ -3,21 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hashmap_int.h"
+#include "linkedlist.h"
 
 int main() {
-  map_int_t* map_int = map_int_create(0);
+  int values[] = { 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
+  node_t* head = convert_to_linkedlist(values, sizeof(values) / sizeof(int));
 
-  for (int i = 0; i < 100; ++i) {
-    map_int_set(map_int, i, i);
-  }
+  linkedlist_remove_duplicates(head);
 
-  for (int i = 0; i < 90; ++i) {
-    map_int_del(map_int, i);
-  }
-
-  map_int_dump(map_int);
-  map_int_destroy(map_int);
+  linkedlist_print(head);
+  linkedlist_clear(&head);
 
   return EXIT_SUCCESS;
 }

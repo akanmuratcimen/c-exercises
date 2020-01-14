@@ -8,7 +8,7 @@
 
 const float load_factor = 0.8;
 
-bool is_prime(const unsigned int n) {
+static bool is_prime(const unsigned int n) {
   if ((n & 1) == 0) {
     return n == 2;
   }
@@ -22,7 +22,7 @@ bool is_prime(const unsigned int n) {
   return true;
 }
 
-unsigned int next_prime(unsigned int n) {
+static unsigned int next_prime(unsigned int n) {
   if (n < 13) {
     return 13;
   }
@@ -61,11 +61,11 @@ map_int_t* map_int_create(const unsigned int initial_capacity) {
   return map;
 }
 
-bool should_growth_capacity(const map_int_t* map) {
+static inline bool should_growth_capacity(const map_int_t* map) {
   return map->entry_count >= map->capacity * load_factor;
 }
 
-bool should_shrink_capacity(const map_int_t* map) {
+static inline bool should_shrink_capacity(const map_int_t* map) {
   if (map->initial_capacity == map->capacity) {
     return false;
   }
@@ -89,8 +89,6 @@ map_int_entry_t* map_int_create_entry(const int key, const int value) {
 
 void map_int_change_capacity(map_int_t* map, const unsigned int capacity) {
   const unsigned int old_capacity = map->capacity;
-
-  printf("capacity change: %d to %d\n", old_capacity, capacity);
 
   map_int_entry_t** old_entries = map->entries;
 
