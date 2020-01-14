@@ -6,10 +6,10 @@
 #include "linkedlist.h"
 
 int main() {
-  int values[] = { 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
+  int values[] = { 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
   node_t* head = convert_to_linkedlist(values, sizeof(values) / sizeof(int));
 
-  linkedlist_remove_duplicates(head);
+  linkedlist_remove_by_value(head, 1);
 
   linkedlist_print(head);
   linkedlist_clear(&head);

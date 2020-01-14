@@ -35,6 +35,7 @@
         "new": "c",
         "cstdbool": "c",
         "c++config.h": "c",
-        "assert.h": "c"
+        "assert.h": "c",
+        "stdio.h": "c"
     }
 }
