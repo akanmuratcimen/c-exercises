@@ -8,11 +8,11 @@
 int main() {
   map_int_t* map_int = map_int_create(0);
 
-  for (int i = 0; i < 10000000; i++) {
+  for (int i = 0; i < 100; i++) {
     map_int_set(map_int, i, i);
   }
 
-  // map_int_dump(map_int);
+  map_int_dump(map_int);
   map_int_destroy(map_int);
 
   return EXIT_SUCCESS;
