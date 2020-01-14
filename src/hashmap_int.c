@@ -35,14 +35,11 @@ unsigned int next_prime(unsigned int n) {
   return next_prime(n - 1);
 }
 
-inline static int hash(const unsigned int capacity, const int key) {
-  return key % capacity;
+inline static int hash(const map_int_t* map, const int key) {
+  return key % map->capacity;
 }
 
-map_int_t* map_int_create(const int initial_capacity) {
-  map_int_t* map = malloc(sizeof(map_int_t));
-  const unsigned int capacity = next_prime(initial_capacity);
-
+void map_int_allocate_entries(map_int_t* map, const unsigned int capacity) {
   map->entries = malloc(sizeof(map_int_entry_t) * capacity);
 
   for (unsigned int i = 0; i < capacity; ++i) {
@@ -50,13 +47,20 @@ map_int_t* map_int_create(const int initial_capacity) {
   }
 
   map->capacity = capacity;
+}
+
+map_int_t* map_int_create(const int initial_capacity) {
+  map_int_t* map = malloc(sizeof(map_int_t));
+
+  map_int_allocate_entries(map, next_prime(initial_capacity));
+
   map->entry_count = 0;
 
   return map;
 }
 
-bool should_growth_capacity(const map_int_t* map_int) {
-  return map_int->entry_count >= map_int->capacity * load_factor;
+bool should_growth_capacity(const map_int_t* map) {
+  return map->entry_count >= map->capacity * load_factor;
 }
 
 map_int_entry_t* map_int_create_entry(const int key, const int value) {
@@ -73,28 +77,27 @@ map_int_entry_t* map_int_create_entry(const int key, const int value) {
   return entry;
 }
 
-void growth_capacity(map_int_t* map_int) {
-  const unsigned int old_capacity = map_int->capacity;
+void map_int_growth_capacity(map_int_t* map) {
+  const unsigned int old_capacity = map->capacity;
   const unsigned int new_capacity = next_prime(old_capacity * 2);
 
-  map_int_entry_t** old_entries = map_int->entries;
+  map_int_entry_t** old_entries = map->entries;
 
-  map_int->entries = malloc(sizeof(map_int_entry_t) * new_capacity);
-  map_int->capacity = new_capacity;
+  map_int_allocate_entries(map, new_capacity);
 
   for (unsigned int i = 0; i < old_capacity; ++i) {
     map_int_entry_t* old_entry = old_entries[i];
 
     while (old_entry) {
       map_int_entry_t* old_entry_next = old_entry->next;
-      const unsigned int slot = hash(new_capacity, old_entry->key);
-      map_int_entry_t* new_entry = map_int->entries[slot];
+      const unsigned int slot = hash(map, old_entry->key);
+      map_int_entry_t* new_entry = map->entries[slot];
 
       if (new_entry == NULL) {
-        map_int->entries[slot] =
+        map->entries[slot] =
             map_int_create_entry(old_entry->key, old_entry->value);
       } else {
-        map_int_entry_t* prev_new_entry;
+        map_int_entry_t* prev_new_entry = NULL;
 
         while (new_entry) {
           if (new_entry->next == NULL) {
@@ -117,22 +120,22 @@ void growth_capacity(map_int_t* map_int) {
   free(old_entries);
 }
 
-void map_int_set(map_int_t* map_int, const int key, const int value) {
-  const unsigned int slot = hash(map_int->capacity, key);
-  map_int_entry_t* entry = map_int->entries[slot];
+void map_int_set(map_int_t* map, const int key, const int value) {
+  const unsigned int slot = hash(map, key);
+  map_int_entry_t* entry = map->entries[slot];
 
   if (entry == NULL) {
-    if (should_growth_capacity(map_int) == true) {
-      growth_capacity(map_int);
+    if (should_growth_capacity(map)) {
+      map_int_growth_capacity(map);
     }
 
-    map_int->entries[slot] = map_int_create_entry(key, value);
-    map_int->entry_count++;
+    map->entries[slot] = map_int_create_entry(key, value);
+    map->entry_count++;
 
     return;
   }
 
-  map_int_entry_t* prev;
+  map_int_entry_t* prev = NULL;
 
   while (entry) {
     if (entry->key == key) {
@@ -149,18 +152,18 @@ void map_int_set(map_int_t* map_int, const int key, const int value) {
     return;
   }
 
-  if (should_growth_capacity(map_int) == true) {
-    growth_capacity(map_int);
+  if (should_growth_capacity(map)) {
+    map_int_growth_capacity(map);
   }
 
   prev->next = map_int_create_entry(key, value);
-  map_int->entry_count++;
+  map->entry_count++;
 }
 
 inline static map_int_entry_t* map_int_get_entry(
-    const map_int_t* map_int, const int key) {
-  const unsigned int slot = hash(map_int->capacity, key);
-  map_int_entry_t* entry = map_int->entries[slot];
+    const map_int_t* map, const int key) {
+  const unsigned int slot = hash(map, key);
+  map_int_entry_t* entry = map->entries[slot];
 
   while (entry) {
     if (entry->key == key) {
@@ -173,12 +176,12 @@ inline static map_int_entry_t* map_int_get_entry(
   return NULL;
 }
 
-bool map_int_is_key_exists(const map_int_t* map_int, const int key) {
-  return map_int_get_entry(map_int, key) != NULL;
+bool map_int_is_key_exists(const map_int_t* map, const int key) {
+  return map_int_get_entry(map, key) != NULL;
 }
 
-int map_int_get(const map_int_t* map_int, const int key) {
-  map_int_entry_t* entry = map_int_get_entry(map_int, key);
+int map_int_get(const map_int_t* map, const int key) {
+  map_int_entry_t* entry = map_int_get_entry(map, key);
 
   if (entry == NULL) {
     return -1;
@@ -187,11 +190,11 @@ int map_int_get(const map_int_t* map_int, const int key) {
   return entry->value;
 }
 
-void map_int_inc_value(map_int_t* map_int, const int key) {
-  map_int_entry_t* entry = map_int_get_entry(map_int, key);
+void map_int_inc_value(map_int_t* map, const int key) {
+  map_int_entry_t* entry = map_int_get_entry(map, key);
 
   if (entry == NULL) {
-    map_int_set(map_int, key, 1);
+    map_int_set(map, key, 1);
 
     return;
   }
@@ -199,11 +202,11 @@ void map_int_inc_value(map_int_t* map_int, const int key) {
   entry->value++;
 }
 
-void map_int_dec_value(map_int_t* map_int, const int key) {
-  map_int_entry_t* entry = map_int_get_entry(map_int, key);
+void map_int_dec_value(map_int_t* map, const int key) {
+  map_int_entry_t* entry = map_int_get_entry(map, key);
 
   if (entry == NULL) {
-    map_int_set(map_int, key, -1);
+    map_int_set(map, key, -1);
 
     return;
   }
@@ -211,24 +214,24 @@ void map_int_dec_value(map_int_t* map_int, const int key) {
   entry->value--;
 }
 
-void map_int_del(map_int_t* map_int, const int key) {
-  const unsigned int slot = hash(map_int->capacity, key);
-  map_int_entry_t* entry = map_int->entries[slot];
+void map_int_del(map_int_t* map, const int key) {
+  const unsigned int slot = hash(map, key);
+  map_int_entry_t* entry = map->entries[slot];
 
   if (entry == NULL) {
     return;
   }
 
   int idx = 0;
-  map_int_entry_t* prev;
+  map_int_entry_t* prev = NULL;
 
   while (entry) {
     if (entry->key == key) {
       if (idx == 0) {
         if (entry->next == NULL) {
-          map_int->entries[slot] = NULL;
+          map->entries[slot] = NULL;
         } else if (entry->next != NULL) {
-          map_int->entries[slot] = entry->next;
+          map->entries[slot] = entry->next;
         }
       } else if (prev != NULL) {
         if (entry->next != NULL) {
@@ -239,7 +242,7 @@ void map_int_del(map_int_t* map_int, const int key) {
       }
 
       free(entry);
-      map_int->entry_count--;
+      map->entry_count--;
 
       return;
     }
@@ -251,9 +254,13 @@ void map_int_del(map_int_t* map_int, const int key) {
   }
 }
 
-void map_int_destroy(map_int_t* map_int) {
-  for (unsigned int i = 0; i < map_int->capacity; ++i) {
-    map_int_entry_t* entry = map_int->entries[i];
+void map_int_destroy(map_int_t* map) {
+  if (map == NULL) {
+    return;
+  }
+
+  for (unsigned int i = 0; i < map->capacity; ++i) {
+    map_int_entry_t* entry = map->entries[i];
 
     while (entry) {
       map_int_entry_t* next = entry->next;
@@ -264,13 +271,13 @@ void map_int_destroy(map_int_t* map_int) {
     }
   }
 
-  free(map_int->entries);
-  free(map_int);
+  free(map->entries);
+  free(map);
 }
 
-void map_int_dump(const map_int_t* map_int) {
-  for (unsigned int i = 0; i < map_int->capacity; ++i) {
-    map_int_entry_t* entry = map_int->entries[i];
+void map_int_dump(const map_int_t* map) {
+  for (unsigned int i = 0; i < map->capacity; ++i) {
+    map_int_entry_t* entry = map->entries[i];
 
     if (entry == NULL) {
       continue;

@@ -14,7 +14,7 @@ run:
 	./$(OUTPUT)
 
 check:
-	valgrind ./$(OUTPUT)
+	valgrind --track-origins=yes ./$(OUTPUT)
 
 asm:
 	@$(CC) $(SRCFILES) -S -mllvm --x86-asm-syntax=intel -g $(CFLAGS)

@@ -6,9 +6,9 @@
 #include "hashmap_int.h"
 
 int main() {
-  map_int_t* map_int = map_int_create(1);
+  map_int_t* map_int = map_int_create(0);
 
-  for (int i = 0; i < 1000000; i++) {
+  for (int i = 0; i < 10000000; i++) {
     map_int_set(map_int, i, i);
   }
 
