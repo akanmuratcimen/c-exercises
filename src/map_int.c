@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "hashmap_int.h"
+#include "map_int.h"
 
 const float load_factor = 0.8;
 

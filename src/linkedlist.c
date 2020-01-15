@@ -1,5 +1,5 @@
 #include "linkedlist.h"
-#include "hashmap_int.h"
+#include "map_int.h"
 #include "utility.h"
 
 void linkedlist_print(const node_t* head) {
