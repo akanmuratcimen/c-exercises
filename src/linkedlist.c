@@ -117,3 +117,21 @@ void linkedlist_remove_by_value(node_t** node, const int value) {
     current = next;
   }
 }
+
+int linkedlist_print_last_kth_element(node_t* head, int k) {
+  if (head == NULL) {
+    return 0;
+  }
+
+  if (k == 0) {
+    k = 1;
+  }
+
+  int index = linkedlist_print_last_kth_element(head->next, k) + 1;
+
+  if (index == k) {
+    printf("%dth last element: %d\n", k, head->value);
+  }
+
+  return index;
+}

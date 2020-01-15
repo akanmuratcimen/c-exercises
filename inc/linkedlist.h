@@ -18,5 +18,6 @@ node_t* linkedlist_push_back(node_t* node, const int value);
 node_t* convert_to_linkedlist(const int* values, const size_t length);
 void linkedlist_remove_duplicates(node_t* node);
 void linkedlist_remove_by_value(node_t** node, const int value);
+int linkedlist_print_last_kth_element(node_t* head, int k);
 
 #endif // LINKEDLIST_H
