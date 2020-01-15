@@ -89,30 +89,31 @@ void linkedlist_remove_duplicates(node_t* node) {
   map_int_destroy(map);
 }
 
-void linkedlist_remove_by_value(node_t* node, const int value) {
+void linkedlist_remove_by_value(node_t** node, const int value) {
   if (node == NULL) {
     return;
   }
 
   node_t* prev = NULL;
+  node_t* current = *node;
 
-  while (node) {
-    if (node->value != value) {
-      prev = node;
-      node = node->next;
+  while (current) {
+    if (current->value != value) {
+      prev = current;
+      current = current->next;
 
       continue;
     }
 
-    node_t* next = node->next;
+    node_t* next = current->next;
 
     if (prev) {
       prev->next = next;
-      free(node);
-      node = next;
     } else {
-      free(node);
-      *node = *next;
+      *node = next;
     }
+
+    free(current);
+    current = next;
   }
 }
