@@ -228,23 +228,14 @@ void map_int_del(map_int_t* map, const int key) {
     return;
   }
 
-  int idx = 0;
   map_int_entry_t* prev = NULL;
 
   while (entry) {
     if (entry->key == key) {
-      if (idx == 0) {
-        if (entry->next == NULL) {
-          map->entries[slot] = NULL;
-        } else if (entry->next != NULL) {
-          map->entries[slot] = entry->next;
-        }
-      } else if (prev != NULL) {
-        if (entry->next != NULL) {
-          prev->next = entry->next;
-        } else if (entry->next == NULL) {
-          prev->next = NULL;
-        }
+      if (prev == NULL) {
+        map->entries[slot] = map->entries[slot]->next;
+      } else {
+        prev->next = map->entries[slot]->next;
       }
 
       free(entry);
@@ -259,8 +250,6 @@ void map_int_del(map_int_t* map, const int key) {
 
     prev = entry;
     entry = prev->next;
-
-    ++idx;
   }
 }
 
