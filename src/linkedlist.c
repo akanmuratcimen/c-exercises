@@ -156,3 +156,28 @@ node_t* linkedlist_last_kth_element(node_t* head, int k) {
 
   return linkedlist_last_kth_element_impl(current, k, &i);
 }
+
+node_t* linkedlist_last_kth_element_itr(node_t* head, int k) {
+  if (k == 0) {
+    k = 1;
+  }
+
+  node_t* node_ptr1 = head;
+
+  while (k--) {
+    if (node_ptr1 == NULL) {
+      return NULL;
+    }
+    
+    node_ptr1 = node_ptr1->next;
+  }
+
+  node_t* node_ptr2 = head;
+
+  while (node_ptr1) {
+    node_ptr1 = node_ptr1->next;
+    node_ptr2 = node_ptr2->next;
+  }
+
+  return node_ptr2;
+}
