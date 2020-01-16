@@ -135,3 +135,24 @@ int linkedlist_print_last_kth_element(node_t* head, int k) {
 
   return index;
 }
+
+node_t* linkedlist_last_kth_element_impl(node_t* node, int k, int* i) {
+  if (node == NULL) {
+    return NULL;
+  }
+
+  node_t* x = linkedlist_last_kth_element_impl(node->next, k, i);
+
+  return ++(*i) == k ? node : x;
+}
+
+node_t* linkedlist_last_kth_element(node_t* head, int k) {
+  node_t* current = head;
+  int i = 0;
+
+  if (k == 0) {
+    k = 1;
+  }
+
+  return linkedlist_last_kth_element_impl(current, k, &i);
+}
