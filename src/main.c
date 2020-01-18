@@ -6,15 +6,19 @@
 #include "linkedlist.h"
 
 int main() {
-  int values[] = { 1, 2, 3 };
-  node_t* head = convert_to_linkedlist(values, sizeof(values) / sizeof(int));
-  node_t* node = linkedlist_last_kth_element_itr(head, 3);
+  int values1[] = { 7, 1, 6 };
+  int values2[] = { 5, 9, 2 };
 
-  if (node) {
-    printf("%d\n", node->value);
-  }
+  node_t* node1 = convert_to_linkedlist(values1, sizeof(values1) / sizeof(int));
+  node_t* node2 = convert_to_linkedlist(values2, sizeof(values2) / sizeof(int));
 
-  linkedlist_clear(&head);
+  node_t* node = linkedlist_sum_reversed_order(node1, node2);
+
+  linkedlist_clear(&node1);
+  linkedlist_clear(&node2);
+
+  linkedlist_print(node);
+  linkedlist_clear(&node);
 
   return EXIT_SUCCESS;
 }

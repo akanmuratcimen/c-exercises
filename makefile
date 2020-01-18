@@ -13,8 +13,8 @@ clean:
 run:
 	./$(OUTPUT)
 
-check:
-	valgrind --track-origins=yes ./$(OUTPUT)
+valgrind:
+	valgrind --track-origins=yes --leak-check=full ./$(OUTPUT)
 
 asm:
 	@$(CC) $(SRCFILES) -S -mllvm --x86-asm-syntax=intel -g $(CFLAGS)

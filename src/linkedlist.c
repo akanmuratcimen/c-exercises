@@ -12,8 +12,7 @@ void linkedlist_print(const node_t* head) {
 }
 
 node_t* linkedlist_new_node(const int value) {
-  node_t* node = NULL;
-  node = (node_t*)malloc(sizeof(node_t));
+  node_t* node = (node_t*)malloc(sizeof(node_t));
 
   if (node == NULL) {
     return NULL;
@@ -168,7 +167,7 @@ node_t* linkedlist_last_kth_element_itr(node_t* head, int k) {
     if (node_ptr1 == NULL) {
       return NULL;
     }
-    
+
     node_ptr1 = node_ptr1->next;
   }
 
@@ -180,4 +179,40 @@ node_t* linkedlist_last_kth_element_itr(node_t* head, int k) {
   }
 
   return node_ptr2;
+}
+
+node_t* linkedlist_sum_reversed_order(node_t* node1, node_t* node2) {
+  node_t *head = NULL, *tail = NULL;
+
+  int carry = 0;
+
+  while (node1 || node2) {
+    int total = carry;
+
+    if (node1) {
+      total += node1->value;
+      node1 = node1->next;
+    }
+
+    if (node2) {
+      total += node2->value;
+      node2 = node2->next;
+    }
+
+    carry = total > 10 ? 1 : 0;
+    total = total % 10;
+
+    if (head == NULL) {
+      head = tail = linkedlist_new_node(total);
+    } else {
+      tail->next = linkedlist_new_node(total);
+      tail = tail->next;
+    }
+  }
+
+  if (carry > 1) {
+    tail->next = linkedlist_new_node(carry);
+  }
+
+  return head;
 }
