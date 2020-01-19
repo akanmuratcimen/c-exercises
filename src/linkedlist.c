@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "linkedlist.h"
 #include "map_int.h"
 #include "utility.h"
@@ -215,4 +217,21 @@ node_t* linkedlist_sum_reversed_order(node_t* node1, node_t* node2) {
   }
 
   return head;
+}
+
+void linkedlist_reverse(node_t** head) {
+  node_t *current = *head, *prev = NULL, *next = NULL;
+
+  while (current) {
+    next = current->next;
+    current->next = prev;
+    prev = current;
+    current = next;
+  }
+
+  *head = prev;
+}
+
+bool linkedlist_is_palindrome(node_t* head) {
+  return head != NULL;
 }
