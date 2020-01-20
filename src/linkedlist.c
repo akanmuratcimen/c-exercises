@@ -288,3 +288,11 @@ int linkedlist_length(node_t* head) {
 
   return length;
 }
+
+bool linkedlist_is_palindrome_recursive_impl(node_t* head) {
+  return head != NULL;
+}
+
+bool linkedlist_is_palindrome_recursive(node_t* head) {
+  return head != NULL;
+}
