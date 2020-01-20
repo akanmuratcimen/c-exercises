@@ -232,6 +232,48 @@ void linkedlist_reverse(node_t** head) {
   *head = prev;
 }
 
-bool linkedlist_is_palindrome(node_t* head) {
-  return head != NULL;
+node_t* linkedlist_copy(node_t* head) {
+  node_t *result_head = NULL, *result_tail = NULL;
+
+  while (head) {
+    node_t* node = linkedlist_new_node(head->value);
+
+    if (result_head == NULL) {
+      result_head = result_tail = node;
+    } else {
+      result_tail->next = node;
+      result_tail = result_tail->next;
+    }
+
+    head = head->next;
+  }
+
+  return result_head;
+}
+
+node_t* linkedlist_copy_reversed(node_t* head) {
+  node_t* copied = linkedlist_copy(head);
+  linkedlist_reverse(&copied);
+
+  return copied;
+}
+
+bool linkedlist_is_palindrome_reversed_check(node_t* head) {
+  node_t* reversed = linkedlist_copy_reversed(head);
+  node_t* reversed_head = reversed;
+
+  while (head && reversed) {
+    if (head->value != reversed->value) {
+      linkedlist_clear(&reversed_head);
+
+      return false;
+    }
+
+    head = head->next;
+    reversed = reversed->next;
+  }
+
+  linkedlist_clear(&reversed_head);
+
+  return true;
 }

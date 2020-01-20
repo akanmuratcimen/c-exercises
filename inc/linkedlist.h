@@ -22,7 +22,8 @@ int linkedlist_print_last_kth_element(node_t* head, int k);
 node_t* linkedlist_last_kth_element(node_t* head, int k);
 node_t* linkedlist_last_kth_element_itr(node_t* head, int k);
 node_t* linkedlist_sum_reversed_order(node_t* node1, node_t* node2);
-bool linkedlist_is_palindrome(node_t* head);
+bool linkedlist_is_palindrome_reversed_check(node_t* head);
 void linkedlist_reverse(node_t** head);
+node_t* linkedlist_copy(node_t* head);
 
 #endif // LINKEDLIST_H

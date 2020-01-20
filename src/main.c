@@ -7,12 +7,11 @@
 #include "linkedlist.h"
 
 int main() {
-  int values[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  int values[] = { 1, 2, 3, 4, 5, 4, 3, 2, 1 };
   size_t size = sizeof(values) / sizeof(int);
   node_t* node = convert_to_linkedlist(values, size);
-
-  linkedlist_reverse(&node);
-  linkedlist_print(node);
+  bool is_palindrome = linkedlist_is_palindrome_reversed_check(node);
+  printf("is_palindrome: %s\n", is_palindrome ? "true" : "false");
   linkedlist_clear(&node);
 
   return EXIT_SUCCESS;
