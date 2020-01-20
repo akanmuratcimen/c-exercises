@@ -25,5 +25,6 @@ node_t* linkedlist_sum_reversed_order(node_t* node1, node_t* node2);
 bool linkedlist_is_palindrome_reversed_check(node_t* head);
 void linkedlist_reverse(node_t** head);
 node_t* linkedlist_copy(node_t* head);
+int linkedlist_length(node_t* head);
 
 #endif // LINKEDLIST_H

@@ -277,3 +277,14 @@ bool linkedlist_is_palindrome_reversed_check(node_t* head) {
 
   return true;
 }
+
+int linkedlist_length(node_t* head) {
+  int length = 0;
+
+  while (head) {
+    length++;
+    head = head->next;
+  }
+
+  return length;
+}

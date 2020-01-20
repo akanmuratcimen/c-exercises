@@ -10,6 +10,9 @@ int main() {
   int values[] = { 1, 2, 3, 4, 5, 4, 3, 2, 1 };
   size_t size = sizeof(values) / sizeof(int);
   node_t* node = convert_to_linkedlist(values, size);
+
+  printf("length: %d\n", linkedlist_length(node));
+
   bool is_palindrome = linkedlist_is_palindrome_reversed_check(node);
   printf("is_palindrome: %s\n", is_palindrome ? "true" : "false");
   linkedlist_clear(&node);
