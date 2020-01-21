@@ -289,10 +289,22 @@ int linkedlist_length(node_t* head) {
   return length;
 }
 
-bool linkedlist_is_palindrome_recursive_impl(node_t* head) {
-  return head != NULL;
+bool linkedlist_is_palindrome_recursive_impl(node_t** head, node_t* tail) {
+  if (tail == NULL) {
+    return true;
+  }
+
+  if (!linkedlist_is_palindrome_recursive_impl(head, tail->next)) {
+    return false;
+  }
+
+  bool is_equals = (*head)->value == tail->value;
+
+  *head = (*head)->next;
+
+  return is_equals;
 }
 
 bool linkedlist_is_palindrome_recursive(node_t* head) {
-  return head != NULL;
+  return linkedlist_is_palindrome_recursive_impl(&head, head);
 }
