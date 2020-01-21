@@ -308,3 +308,7 @@ bool linkedlist_is_palindrome_recursive_impl(node_t** head, node_t* tail) {
 bool linkedlist_is_palindrome_recursive(node_t* head) {
   return linkedlist_is_palindrome_recursive_impl(&head, head);
 }
+
+node_t* linkedlist_intersection_node(node_t* head1, node_t* head2) {
+  return NULL;
+}

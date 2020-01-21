@@ -27,5 +27,6 @@ void linkedlist_reverse(node_t** head);
 node_t* linkedlist_copy(node_t* head);
 int linkedlist_length(node_t* head);
 bool linkedlist_is_palindrome_recursive(node_t* head);
+node_t* linkedlist_intersection_node(node_t* head1, node_t* head2);
 
 #endif // LINKEDLIST_H
