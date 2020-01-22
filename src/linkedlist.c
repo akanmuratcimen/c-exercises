@@ -42,10 +42,12 @@ node_t* linkedlist_push_back(node_t* node, const int value) {
 }
 
 void linkedlist_clear(node_t** head_node) {
+  node_t* temp = NULL;
+
   while (*head_node) {
-    node_t* next = (*head_node)->next;
+    temp = (*head_node)->next;
     free(*head_node);
-    *head_node = next;
+    *head_node = temp;
   }
 
   assert(*head_node == NULL);
@@ -309,6 +311,44 @@ bool linkedlist_is_palindrome_recursive(node_t* head) {
   return linkedlist_is_palindrome_recursive_impl(&head, head);
 }
 
-node_t* linkedlist_intersection_node(node_t* head1, node_t* head2) {
+node_t* linkedlist_intersection_node_impl(
+    node_t* head1, node_t* head2, int length_difference) {
+
+  if (length_difference == 0) {
+    if (head1 == head2) {
+      return head1;
+    }
+
+    return NULL;
+  }
+
+  for (int i = 0; i < length_difference; ++i) {
+    head1 = head1->next;
+  }
+
+  while (head1 && head2) {
+    if (head1 == head2) {
+      return head1;
+    }
+
+    head1 = head1->next;
+    head2 = head2->next;
+  }
+
   return NULL;
+}
+
+node_t* linkedlist_intersection_node(node_t* head1, node_t* head2) {
+  int head1_length = linkedlist_length(head1);
+  int head2_length = linkedlist_length(head2);
+
+  int length_difference;
+
+  if (head1_length > head2_length) {
+    length_difference = head1_length - head2_length;
+    return linkedlist_intersection_node_impl(head1, head2, length_difference);
+  }
+
+  length_difference = head2_length - head1_length;
+  return linkedlist_intersection_node_impl(head2, head1, length_difference);
 }
