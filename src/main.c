@@ -5,26 +5,21 @@
 
 int main() {
 
-  node_t* intersection_node = linkedlist_new_node(8);
-  intersection_node->next = linkedlist_new_node(9);
+  node_t* loop = linkedlist_new_node(3);
+  loop->next = linkedlist_new_node(4);
+  loop->next->next = loop;
 
-  node_t* head1 = linkedlist_new_node(1);
-  head1->next = linkedlist_new_node(2);
-  head1->next->next = linkedlist_new_node(3);
-  head1->next->next->next = intersection_node;
+  node_t* head = linkedlist_new_node(1);
+  head->next = linkedlist_new_node(2);
+  head->next->next = loop;
 
-  node_t* head2 = linkedlist_new_node(1);
-  head2->next = linkedlist_new_node(2);
-  head2->next->next = intersection_node;
+  node_t* found_loop = linkedlist_get_loop_node(head);
 
-  node_t* intersection = linkedlist_intersection_node(head1, head2);
-
-  if (intersection) {
-    printf("has_intersection: %d\n", intersection->value);
+  if (found_loop) {
+    printf("found loop: %d\n", found_loop->value);
   }
 
-  linkedlist_clear(&head1);
-  linkedlist_clear(&head2);
+  linkedlist_clear(&head);
 
   return EXIT_SUCCESS;
 }

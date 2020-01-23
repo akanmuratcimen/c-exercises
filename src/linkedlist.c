@@ -352,3 +352,18 @@ node_t* linkedlist_intersection_node(node_t* head1, node_t* head2) {
   length_difference = head2_length - head1_length;
   return linkedlist_intersection_node_impl(head2, head1, length_difference);
 }
+
+node_t* linkedlist_get_loop_node(node_t* head) {
+  node_t *slow = head, *fast = head;
+
+  while (slow && fast && fast->next) {
+    slow = slow->next;
+    fast = fast->next->next;
+
+    if (slow == fast) {
+      return slow;
+    }
+  }
+
+  return NULL;
+}

@@ -2,9 +2,9 @@
 #define LINKEDLIST_H
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 typedef struct node_t {
   struct node_t* next;
@@ -29,5 +29,6 @@ node_t* linkedlist_copy(node_t* head);
 int linkedlist_length(node_t* head);
 bool linkedlist_is_palindrome_recursive(node_t* head);
 node_t* linkedlist_intersection_node(node_t* head1, node_t* head2);
+node_t* linkedlist_get_loop_node(node_t* head);
 
 #endif // LINKEDLIST_H
