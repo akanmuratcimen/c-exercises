@@ -1,25 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "linkedlist.h"
+#include "stack_int.h"
 
 int main() {
+  stack_int_t* stack_int = stack_int_initialize();
 
-  node_t* loop = linkedlist_new_node(3);
-  loop->next = linkedlist_new_node(4);
-  loop->next->next = loop;
+  stack_int_push(stack_int, 1);
+  stack_int_push(stack_int, 2);
+  stack_int_push(stack_int, 3);
+  stack_int_push(stack_int, 4);
+  stack_int_push(stack_int, 5);
+  stack_int_push(stack_int, 6);
+  stack_int_push(stack_int, 7);
 
-  node_t* head = linkedlist_new_node(1);
-  head->next = linkedlist_new_node(2);
-  head->next->next = loop;
-
-  node_t* found_loop = linkedlist_get_loop_node(head);
-
-  if (found_loop) {
-    printf("found loop: %d\n", found_loop->value);
-  }
-
-  linkedlist_clear(&head);
+  stack_int_print(stack_int);
 
   return EXIT_SUCCESS;
 }
