@@ -16,5 +16,18 @@ int main() {
 
   stack_int_print(stack_int);
 
+  int value = 0;
+
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+  stack_int_pop(stack_int, &value);
+
+  stack_int_print(stack_int);
+
   return EXIT_SUCCESS;
 }
