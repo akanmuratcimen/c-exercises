@@ -36,6 +36,7 @@
         "cstdbool": "c",
         "c++config.h": "c",
         "assert.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "map_int.h": "c"
     }
 }

@@ -3,46 +3,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-stack_int_t* stack_int_initialize() {
+stack_int_t* stack_int_initialize(int size) {
   stack_int_t* stack = (stack_int_t*)malloc(sizeof(stack_int_t));
 
-  stack->length = 0;
-  stack->top = NULL;
+  stack->size = 0;
+  stack->values = malloc(sizeof(int) * size);
 
   return stack;
 }
 
-stack_int_node_t* stack_int_push(stack_int_t* stack, int value) {
-  stack_int_node_t* node = (stack_int_node_t*)malloc(sizeof(stack_int_node_t));
-
-  node->value = value;
-  node->next = stack->top;
-
-  stack->top = node;
-  stack->length++;
-
-  return node;
+void stack_int_push(stack_int_t* stack, int value) {
+  stack->values[stack->size++] = value;
 }
 
 bool stack_int_is_empty(stack_int_t* stack) {
-  return stack->length == 0;
+  return stack->size == 0;
 }
 
-bool stack_int_pop(stack_int_t* stack, int* value) {
+int stack_int_peek(stack_int_t* stack) {
+  return stack->values[stack->size - 1];
+}
+
+int stack_int_pop(stack_int_t* stack) {
   if (stack_int_is_empty(stack)) {
-    return false;
+    return -1;
   }
 
-  stack_int_node_t* next = stack->top->next;
+  int value = stack_int_peek(stack);
 
-  *value = stack->top->value;
+  stack->values[--stack->size] = 0;
 
-  free(stack->top);
-
-  stack->top = next;
-  stack->length--;
-
-  return true;
+  return value;
 }
 
 void stack_int_print(stack_int_t* stack) {
@@ -50,14 +41,16 @@ void stack_int_print(stack_int_t* stack) {
     return;
   }
 
-  printf("size: %d\n", stack->length);
-
-  stack_int_node_t* node = stack->top;
-
-  while (node) {
-    printf("%d ", node->value);
-    node = node->next;
+  for (int i = stack->size - 1; i >= 0; --i) {
+    printf("%d ", stack->values[i]);
   }
 
   printf("\n");
+}
+
+void stack_int_clear(stack_int_t** stack) {
+  free((*stack)->values);
+  free(*stack);
+
+  *stack = NULL;
 }
