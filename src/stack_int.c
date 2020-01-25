@@ -25,12 +25,7 @@ int stack_int_peek(stack_int_t* stack) {
 }
 
 int stack_int_pop(stack_int_t* stack) {
-  if (stack_int_is_empty(stack)) {
-    return -1;
-  }
-
   int value = stack_int_peek(stack);
-
   stack->values[--stack->size] = 0;
 
   return value;

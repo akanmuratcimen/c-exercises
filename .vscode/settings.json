@@ -38,5 +38,6 @@
         "assert.h": "c",
         "stdio.h": "c",
         "map_int.h": "c"
-    }
+    },
+    "editor.fontSize": 13
 }

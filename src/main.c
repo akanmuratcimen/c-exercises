@@ -1,27 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "stack_int.h"
+#include "queue_int.h"
 
 int main() {
-  stack_int_t* stack = stack_int_initialize(10);
+  queue_int_t* queue = queue_int_initialize(10);
 
-  stack_int_push(stack, 1);
-  stack_int_push(stack, 2);
-  stack_int_push(stack, 3);
-  stack_int_push(stack, 4);
-  stack_int_push(stack, 5);
-  stack_int_push(stack, 6);
-  stack_int_push(stack, 7);
+  queue_int_enqueue(queue, 1);
+  queue_int_enqueue(queue, 2);
+  queue_int_enqueue(queue, 3);
+  queue_int_enqueue(queue, 4);
+  queue_int_enqueue(queue, 5);
 
-  printf("top: %d\n", stack_int_peek(stack));
+  queue_int_dequeue(queue);
+  queue_int_dequeue(queue);
 
-  stack_int_pop(stack);
+  printf("peek: %d\n", queue_int_peek(queue));
 
-  printf("top: %d\n", stack_int_peek(stack));
+  queue_int_enqueue(queue, 6);
 
-  stack_int_print(stack);
-  stack_int_clear(&stack);
+  queue_int_print(queue);
+  queue_int_clear(&queue);
 
   return EXIT_SUCCESS;
 }
