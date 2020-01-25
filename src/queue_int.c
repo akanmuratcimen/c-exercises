@@ -36,6 +36,10 @@ void queue_int_dequeue(queue_int_t* queue) {
 }
 
 int queue_int_peek(queue_int_t* queue) {
+  if (queue_int_is_empty(queue)) {
+    exit(EXIT_FAILURE);
+  }
+
   return queue->values[queue->head];
 }
 
