@@ -17,7 +17,6 @@ void queue_int_dequeue(queue_int_t* queue);
 int queue_int_peek(queue_int_t* queue);
 bool queue_int_is_empty(queue_int_t* queue);
 bool queue_int_is_full(queue_int_t* queue);
-void queue_int_print(queue_int_t* queue);
 void queue_int_clear(queue_int_t** queue);
 
 #endif // QUEUE_INT_H

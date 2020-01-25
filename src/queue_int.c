@@ -17,25 +17,22 @@ queue_int_t* queue_int_initialize(const int capacity) {
 }
 
 void queue_int_enqueue(queue_int_t* queue, const int value) {
-  queue->values[++queue->tail] = value;
+  if (queue_int_is_full(queue)) {
+    exit(EXIT_FAILURE);
+  }
+
+  queue->tail = (queue->tail + 1) % queue->capacity;
+  queue->values[queue->tail] = value;
   queue->size++;
 }
 
 void queue_int_dequeue(queue_int_t* queue) {
-  queue->values[queue->head++] = 0;
+  if (queue_int_is_empty(queue)) {
+    exit(EXIT_FAILURE);
+  }
+
+  queue->head = (queue->head + 1) % queue->capacity;
   queue->size--;
-}
-
-void queue_int_print(queue_int_t* queue) {
-  if (queue->size == 0) {
-    return;
-  }
-
-  for (int i = queue->head; i <= queue->tail; i++) {
-    printf("%d ", queue->values[i]);
-  }
-
-  printf("\n");
 }
 
 int queue_int_peek(queue_int_t* queue) {
