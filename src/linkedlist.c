@@ -367,3 +367,37 @@ node_t* linkedlist_get_loop_node(node_t* head) {
 
   return NULL;
 }
+
+node_t* linkedlist_index_partition_odd_even(node_t* head) {
+  if (head == NULL || head->next == NULL) {
+    return head;
+  }
+
+  node_t *odd_head = head, *odd_tail = odd_head;
+  node_t *even_head = head->next, *even_tail = even_head;
+
+  head = head->next->next;
+
+  int i = 3;
+
+  while (head) {
+    node_t* next = head->next;
+    head->next = NULL;
+
+    if (i % 2 == 0) { // even
+      even_tail->next = head;
+      even_tail = even_tail->next;
+    } else { // odd
+      odd_tail->next = head;
+      odd_tail = odd_tail->next;
+    }
+
+    i++;
+    head = next;
+  }
+
+  even_tail->next = NULL;
+  odd_tail->next = even_head;
+
+  return odd_head;
+}
