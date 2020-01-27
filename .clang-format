@@ -10,5 +10,7 @@ SpaceAfterTemplateKeyword: false
 SpaceBeforeCpp11BracedList: true
 ColumnLimit: 80
 AlignAfterOpenBracket: DontAlign
-ContinuationIndentWidth: 4
+ContinuationIndentWidth: 2
 IndentWidth: 2
+BinPackArguments: true
+BinPackParameters: true

@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-stack_int_t* stack_int_initialize(int size) {
+stack_int_t* stack_int_initialize(int capacity) {
   stack_int_t* stack = (stack_int_t*)malloc(sizeof(stack_int_t));
 
   stack->size = 0;
-  stack->values = malloc(sizeof(int) * size);
+  stack->values = malloc(sizeof(int) * capacity);
 
   return stack;
 }
