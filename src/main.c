@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "linkedlist.h"
+#include "algorithms.h"
 
 int main() {
-  int values[] = { 2, 1, 3, 5, 6, 4, 7 };
-  size_t size = sizeof(values) / sizeof(values[0]);
-  node_t* linkedlist = convert_to_linkedlist(values, size);
+  int nums[] = { 3, 2, 4 };
+  int return_size;
+  int* x = two_sum(nums, sizeof(nums) / sizeof(nums[0]), 6, &return_size);
 
-  node_t* partitioned = linkedlist_index_partition_odd_even(linkedlist);
+  for (int i = 0; i < return_size; ++i) {
+    printf("%d ", x[i]);
+  }
 
-  linkedlist_print(partitioned);
-  linkedlist_clear(&partitioned);
+  printf("\n");
 
   return EXIT_SUCCESS;
 }
