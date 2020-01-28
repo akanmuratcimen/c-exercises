@@ -14,7 +14,7 @@ run:
 	./$(OUTPUT)
 
 valgrind:
-	valgrind --track-origins=yes --leak-check=full ./$(OUTPUT)
+	valgrind --track-origins=yes --leak-check=full -s ./$(OUTPUT)
 
 asm:
 	@$(CC) $(SRCFILES) -S -mllvm --x86-asm-syntax=intel -g $(CFLAGS)

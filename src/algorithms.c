@@ -28,9 +28,13 @@ int* two_sum(int* nums, int nums_size, int target, int* return_size) {
       result[0] = i;
       result[1] = map_index;
 
+      map_int_destroy(map);
+
       return result;
     }
   }
+
+  map_int_destroy(map);
 
   result[0] = -1;
   result[1] = -1;

@@ -13,6 +13,7 @@ int main() {
   }
 
   printf("\n");
+  free(x);
 
   return EXIT_SUCCESS;
 }
