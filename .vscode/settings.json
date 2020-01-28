@@ -37,7 +37,8 @@
         "c++config.h": "c",
         "assert.h": "c",
         "stdio.h": "c",
-        "map_int.h": "c"
+        "map_int.h": "c",
+        "algorithms.h": "c"
     },
     "editor.fontSize": 13
 }
