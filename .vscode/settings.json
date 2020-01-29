@@ -38,7 +38,9 @@
         "assert.h": "c",
         "stdio.h": "c",
         "map_int.h": "c",
-        "algorithms.h": "c"
+        "algorithms.h": "c",
+        "limits.h": "c",
+        "climits": "c"
     },
     "editor.fontSize": 13
 }

@@ -1,19 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "algorithms.h"
+#include "stack_int.h"
 
 int main() {
-  int nums[] = { 3, 2, 4 };
-  int return_size;
-  int* x = two_sum(nums, sizeof(nums) / sizeof(nums[0]), 6, &return_size);
+  stack_int_t* stack = stack_int_initialize(5);
 
-  for (int i = 0; i < return_size; ++i) {
-    printf("%d ", x[i]);
-  }
+  stack_int_push(stack, -1);
+  stack_int_push(stack, 2);
+  stack_int_push(stack, -4);
+  stack_int_push(stack, 6);
+  stack_int_push(stack, 7);
+  stack_int_push(stack, -8);
+  stack_int_push(stack, 3);
+  stack_int_push(stack, -5);
+  stack_int_push(stack, -21);
 
-  printf("\n");
-  free(x);
+  printf("%d\n", stack_int_min(stack));
+
+  stack_int_pop(stack);
+
+  printf("%d\n", stack_int_min(stack));
+
+  stack_int_pop(stack);
+  stack_int_pop(stack);
+  stack_int_pop(stack);
+
+  printf("%d\n", stack_int_min(stack));
+
+  stack_int_clear(&stack);
 
   return EXIT_SUCCESS;
 }
