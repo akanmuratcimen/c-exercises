@@ -41,7 +41,9 @@
         "algorithms.h": "c",
         "limits.h": "c",
         "climits": "c",
-        "set_of_stacks_int.h": "c"
+        "set_of_stacks_int.h": "c",
+        "random": "c",
+        "limits": "c"
     },
     "editor.fontSize": 13
 }
