@@ -94,9 +94,11 @@ int roman_to_int(char* str) {
   int result = 0;
 
   while (str && *str != '\0') {
+    char next = *(str + 1);
+
     switch (*str) {
     case 'I':
-      if (*(str + 1) && (*(str + 1) == 'V' || *(str + 1) == 'X')) {
+      if (next && (next == 'V' || next == 'X')) {
         result -= 1;
         break;
       }
@@ -105,7 +107,7 @@ int roman_to_int(char* str) {
       break;
     case 'V': result += 5; break;
     case 'X':
-      if (*(str + 1) && (*(str + 1) == 'L' || *(str + 1) == 'C')) {
+      if (next && (next == 'L' || next == 'C')) {
         result -= 10;
         break;
       }
@@ -114,7 +116,7 @@ int roman_to_int(char* str) {
       break;
     case 'L': result += 50; break;
     case 'C':
-      if (*(str + 1) && (*(str + 1) == 'D' || *(str + 1) == 'M')) {
+      if (next && (next == 'D' || next == 'M')) {
         result -= 100;
         break;
       }
@@ -129,4 +131,16 @@ int roman_to_int(char* str) {
   }
 
   return result;
+}
+
+int remove_element(int* nums, int nums_size, int val) {
+  int i, j;
+
+  for (i = 0, j = 0; i < nums_size; ++i) {
+    if (nums[i] != val) {
+      nums[j++] = nums[i];
+    }
+  }
+
+  return j;
 }
