@@ -5,17 +5,11 @@
 #include "algorithms.h"
 
 int main() {
-  int nums[] = { 3, 2, 2, 3 };
+  int nums[] = { 1, 3, 5, 6 };
   int size = sizeof(nums) / sizeof(nums[0]);
-  int new_size = remove_element(nums, size, 3);
+  int insert_position = search_insert_positon(nums, size, 7);
 
-  printf("new size: %d\n", new_size);
-
-  for (int i = 0; i < new_size; ++i) {
-    printf("%d ", nums[i]);
-  }
-
-  printf("\n");
+  printf("position: %d\n", insert_position);
 
   return EXIT_SUCCESS;
 }

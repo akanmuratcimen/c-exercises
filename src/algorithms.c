@@ -144,3 +144,15 @@ int remove_element(int* nums, int nums_size, int val) {
 
   return j;
 }
+
+int search_insert_positon(int* nums, int nums_size, int target) {
+  int i;
+
+  for (i = 0; i < nums_size; ++i) {
+    if (nums[i] >= target) {
+      return i;
+    }
+  }
+
+  return i;
+}

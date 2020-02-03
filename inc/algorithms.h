@@ -9,5 +9,6 @@ char* get_range(char* str, size_t start, size_t end);
 char* longest_palindrome(char* str);
 int roman_to_int(char* str);
 int remove_element(int* nums, int nums_size, int val);
+int search_insert_positon(int* nums, int nums_size, int target);
 
 #endif // ALGORITHMS_H
