@@ -156,3 +156,30 @@ int search_insert_positon(int* nums, int nums_size, int target) {
 
   return i;
 }
+
+int length_of_last_word(char* s) {
+  int counter = 0, last_word_length = 0;
+  bool is_previous_space = false;
+
+  while (s) {
+    if (*s == 0x20 || *s == '\0') {
+      if (!is_previous_space) {
+        last_word_length = counter;
+      }
+
+      is_previous_space = true;
+      counter = 0;
+    } else {
+      is_previous_space = false;
+      counter++;
+    }
+
+    if (*s == '\0') {
+      break;
+    }
+
+    s++;
+  }
+
+  return last_word_length ? last_word_length : counter;
+}

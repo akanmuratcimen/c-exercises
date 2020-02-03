@@ -10,5 +10,6 @@ char* longest_palindrome(char* str);
 int roman_to_int(char* str);
 int remove_element(int* nums, int nums_size, int val);
 int search_insert_positon(int* nums, int nums_size, int target);
+int length_of_last_word(char* s);
 
 #endif // ALGORITHMS_H
