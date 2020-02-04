@@ -11,5 +11,7 @@ int roman_to_int(char* str);
 int remove_element(int* nums, int nums_size, int val);
 int search_insert_positon(int* nums, int nums_size, int target);
 int length_of_last_word(char* s);
+char* reverse(char* str);
+char* add_binary(char* a, char* b);
 
 #endif // ALGORITHMS_H

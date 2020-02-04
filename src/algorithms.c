@@ -183,3 +183,19 @@ int length_of_last_word(char* s) {
 
   return last_word_length ? last_word_length : counter;
 }
+
+char* reverse(char* str) {
+  char t, n = strlen(str);
+
+  for (int i = 0; i < (n / 2); ++i) {
+    t = str[i];
+    str[i] = str[n - i - 1];
+    str[n - i - 1] = t;
+  }
+
+  return str;
+}
+
+char* add_binary(char* a, char* b) {
+  return *a > *b ? a : b;
+}

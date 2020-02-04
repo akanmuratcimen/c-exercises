@@ -5,7 +5,7 @@
 #include "algorithms.h"
 
 int main() {
-  printf("length of last word: %d\n", length_of_last_word("a    bx   d "));
+  printf("binary add: %s\n", add_binary("1010", "1111"));
 
   return EXIT_SUCCESS;
 }
