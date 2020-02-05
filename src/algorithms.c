@@ -6,6 +6,9 @@
 #include "algorithms.h"
 #include "map_int.h"
 
+#define max(a, b) ((a) > (b) ? (a) : (b))
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
 int* two_sum(int* nums, int nums_size, int target, int* return_size) {
   *return_size = 2;
   int* result = malloc(*return_size * sizeof(int));
@@ -197,5 +200,29 @@ char* reverse(char* str) {
 }
 
 char* add_binary(char* a, char* b) {
-  return *a > *b ? a : b;
+  int ai = strlen(a) - 1, bi = strlen(b) - 1, c = 0, i;
+  char* r = (char*)malloc(sizeof(char) * (max(ai, bi) + 2));
+
+  for (i = 0; ai >= 0 || bi >= 0; --ai, --bi, ++i) {
+    int sum = c;
+
+    if (ai >= 0) {
+      sum += a[ai] - '0';
+    }
+
+    if (bi >= 0) {
+      sum += b[bi] - '0';
+    }
+
+    c = sum / 2;
+    r[i] = sum % 2 + '0';
+  }
+
+  if (c) {
+    r[i++] = c + '0';
+  }
+
+  r[i] = '\0';
+
+  return reverse(r);
 }

@@ -43,7 +43,9 @@
         "climits": "c",
         "set_of_stacks_int.h": "c",
         "random": "c",
-        "limits": "c"
+        "limits": "c",
+        "bit": "c",
+        "numeric": "c"
     },
     "editor.fontSize": 13
 }

@@ -5,7 +5,7 @@
 #include "algorithms.h"
 
 int main() {
-  printf("binary add: %s\n", add_binary("1010", "1111"));
+  printf("binary add: %s\n", add_binary("101011111010", "1011"));
 
   return EXIT_SUCCESS;
 }
