@@ -5,7 +5,7 @@
 #include "algorithms.h"
 
 int main() {
-  printf("binary add: %s\n", add_binary("101011111010", "1011"));
+  printf("number of ways to climb the stairs: %d\n", climb_stairs(10));
 
   return EXIT_SUCCESS;
 }

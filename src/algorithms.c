@@ -226,3 +226,20 @@ char* add_binary(char* a, char* b) {
 
   return reverse(r);
 }
+
+int climb_stairs(const int n) {
+  if (n <= 1) {
+    return n;
+  }
+
+  int m[n];
+
+  m[0] = 1;
+  m[1] = 2;
+
+  for (int i = 2; i <= n; ++i) {
+    m[i] = m[i - 2] + m[i - 1];
+  }
+
+  return m[n - 1];
+}

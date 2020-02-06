@@ -13,5 +13,6 @@ int search_insert_positon(int* nums, int nums_size, int target);
 int length_of_last_word(char* s);
 char* reverse(char* str);
 char* add_binary(char* a, char* b);
+int climb_stairs(int n);
 
 #endif // ALGORITHMS_H
