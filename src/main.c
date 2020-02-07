@@ -5,7 +5,16 @@
 #include "algorithms.h"
 
 int main() {
-  printf("number of ways to climb the stairs: %d\n", climb_stairs(10));
+  int nums1[6] = { 1, 2, 3 };
+  int nums2[] = { 2, 5, 6 };
+
+  merge_sorted_arr(nums1, 3, nums2, 3);
+
+  for (int i = 0; i < 6; ++i) {
+    printf("%d ", nums1[i]);
+  }
+
+  printf("\n");
 
   return EXIT_SUCCESS;
 }

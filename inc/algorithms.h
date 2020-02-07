@@ -14,5 +14,6 @@ int length_of_last_word(char* s);
 char* reverse(char* str);
 char* add_binary(char* a, char* b);
 int climb_stairs(int n);
+void merge_sorted_arr(int* nums1, int m, int* nums2, int n);
 
 #endif // ALGORITHMS_H
