@@ -2,6 +2,7 @@
 #define ALGORITHMS_H
 
 #include <stdbool.h>
+#include "tree_node.h"
 
 int* two_sum(int* nums, int nums_size, int target, int* return_size);
 bool is_palindrome(char* str, size_t start, size_t end);
@@ -15,5 +16,6 @@ char* reverse(char* str);
 char* add_binary(char* a, char* b);
 int climb_stairs(int n);
 void merge_sorted_arr(int* nums1, int m, int* nums2, int n);
+bool is_same_tree(struct tree_node* p, struct tree_node* q);
 
 #endif // ALGORITHMS_H

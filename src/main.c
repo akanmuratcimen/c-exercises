@@ -3,18 +3,20 @@
 #include <string.h>
 
 #include "algorithms.h"
+#include "tree_node.h"
 
 int main() {
-  int nums1[6] = { 1, 2, 3 };
-  int nums2[] = { 2, 5, 6 };
+  struct tree_node* p = tree_node_create(1);
 
-  merge_sorted_arr(nums1, 3, nums2, 3);
+  p->left = tree_node_create(2);
+  p->right = tree_node_create(3);
 
-  for (int i = 0; i < 6; ++i) {
-    printf("%d ", nums1[i]);
-  }
+  struct tree_node* q = tree_node_create(1);
 
-  printf("\n");
+  q->left = tree_node_create(2);
+  q->right = tree_node_create(3);
+
+  printf("is_same_tree: %d\n", is_same_tree(p, q));
 
   return EXIT_SUCCESS;
 }

@@ -5,6 +5,7 @@
 
 #include "algorithms.h"
 #include "map_int.h"
+#include "tree_node.h"
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #define min(a, b) ((a) < (b) ? (a) : (b))
@@ -248,4 +249,28 @@ void merge_sorted_arr(int* nums1, int m, int* nums2, int n) {
   for (int i = m - 1, j = n - 1, k = m + n - 1; j >= 0;) {
     nums1[k--] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
   }
+}
+
+bool is_same_tree(struct tree_node* p, struct tree_node* q) {
+  if (p == NULL && q == NULL) {
+    return true;
+  } 
+  
+  if (p == NULL || q == NULL) {
+    return false;
+  }
+
+  if (p->value != q->value) {
+    return false;
+  }
+  
+  if (!is_same_tree(p->left, q->left)) {
+    return false;
+  }
+  
+  if (!is_same_tree(p->right, q->right)) {
+    return false;
+  }
+
+  return true;
 }
