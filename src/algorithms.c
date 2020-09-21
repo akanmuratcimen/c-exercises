@@ -274,3 +274,20 @@ bool is_same_tree(struct tree_node* p, struct tree_node* q) {
 
   return true;
 }
+
+int add_digits(int num) {
+  int result = 0;
+
+  while (num) {
+    int x = num % 10;
+    result += x;
+    num = num / 10;
+  }
+  
+  if (result >= 10) {
+    return add_digits(result);
+  }
+
+  return result;
+}
+
