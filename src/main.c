@@ -5,7 +5,9 @@
 #include "algorithms.h"
 
 int main() {
-  printf("is_ugly: %d\n", is_ugly(35));
+  int nums[] = { 9, 6, 4, 2, 3, 5, 7, 0, 1 };
+
+  printf("missing_number: %d\n", missing_number(nums, 9));
 
   return EXIT_SUCCESS;
 }

@@ -19,5 +19,6 @@ void merge_sorted_arr(int* nums1, int m, int* nums2, int n);
 bool is_same_tree(struct tree_node* p, struct tree_node* q);
 int add_digits(int num);
 bool is_ugly(int num);
+int missing_number(int* nums, int nums_size);
 
 #endif // ALGORITHMS_H

@@ -318,3 +318,15 @@ bool is_ugly(int num) {
 
   return true;
 }
+
+int missing_number(int* nums, int nums_size) {
+  int expected_sum = (nums_size * (nums_size + 1)) / 2;
+  int sum = 0;
+
+  for (int i = 0; i < nums_size; ++i) {
+    sum += nums[i];
+  }
+
+  return expected_sum - sum;
+}
+
