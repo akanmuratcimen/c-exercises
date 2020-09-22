@@ -5,6 +5,7 @@
 #include "algorithms.h"
 
 int main() {
-  printf("add_digits: %d\n", add_digits(38));
+  printf("is_ugly: %d\n", is_ugly(35));
+
   return EXIT_SUCCESS;
 }
