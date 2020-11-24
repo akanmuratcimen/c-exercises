@@ -95,6 +95,18 @@ void stack_int_print(stack_int_t* stack) {
   printf("\n");
 }
 
+void stack_int_print_reverse(stack_int_t* stack) {
+  if (stack_int_is_empty(stack)) {
+    return;
+  }
+
+  for (int i = 0; i < stack->size; ++i) {
+    printf("%d ", stack->entries[i]->value);
+  }
+
+  printf("\n");
+}
+
 void stack_int_clear(stack_int_t** stack) {
   for (int i = 0; i < (*stack)->capacity; ++i) {
     free((*stack)->entries[i]);

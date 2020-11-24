@@ -17,6 +17,7 @@ typedef struct stack_int_t {
 stack_int_t* stack_int_initialize(int capacity);
 void stack_int_push(stack_int_t* stack, int value);
 void stack_int_print(stack_int_t* stack);
+void stack_int_print_reverse(stack_int_t* stack);
 bool stack_int_is_empty(stack_int_t* stack);
 bool stack_int_is_full(stack_int_t* stack);
 int stack_int_peek(stack_int_t* stack);
