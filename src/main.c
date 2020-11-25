@@ -10,8 +10,11 @@ struct node {
   struct node* r;
 };
 
-struct node* new_node(int v) {
-  struct node* n = malloc(sizeof(struct node));
+struct node* 
+new_node(
+  int v
+) {
+  struct node* n = malloc(sizeof struct node);
 
   n->v = v;
   n->l = NULL;
@@ -20,7 +23,10 @@ struct node* new_node(int v) {
   return n;
 }
 
-void print_pre_order(struct node* n) {
+void 
+print_pre_order(
+  struct node* n
+) {
   if (!n) {
     return;
   }
@@ -30,7 +36,10 @@ void print_pre_order(struct node* n) {
   print_pre_order(n->r);
 }
 
-void print_in_order(struct node* n) {
+void 
+print_in_order(
+  struct node* n
+) {
   if (!n) {
     return;
   }
@@ -40,7 +49,10 @@ void print_in_order(struct node* n) {
   print_in_order(n->r);
 }
 
-void print_post_order(struct node* n) {
+void 
+print_post_order(
+  struct node* n
+) {
   if (!n) {
     return;
   }
@@ -50,7 +62,10 @@ void print_post_order(struct node* n) {
   printf("%d ", n->v);
 }
 
-void delete_node(struct node* n) {
+void 
+delete_node(
+  struct node* n
+) {
   if (!n) {
     return;
   }
@@ -61,11 +76,17 @@ void delete_node(struct node* n) {
   free(n);
 }
 
-bool does_have_children(struct node* n) {
+bool 
+does_have_children(
+  struct node* n
+) {
   return n != NULL && (n->l || n->r);
 }
 
-size_t get_height(struct node* n) {
+size_t 
+get_height(
+  struct node* n
+) {
   if (!n) {
     return 0;
   }
@@ -76,8 +97,13 @@ size_t get_height(struct node* n) {
   return l_h > r_h ? l_h + 1 : r_h + 1;
 }
 
-void print_level_by_level(struct node* n, 
-    int** rows, int* cols, size_t lvl) {
+void 
+print_level_by_level(
+  struct node* n, 
+  int** rows, 
+  int* cols, 
+  size_t lvl
+) {
   if (!n) {
     return;
   }
@@ -90,12 +116,15 @@ void print_level_by_level(struct node* n,
   rows[lvl - 1][cols[lvl - 1]++] = n->v;
 }
 
-void print_levels(struct node* n) {
-  int** rows = calloc(10, sizeof(void*));
-  int* cols = calloc(10, sizeof(int));
+void 
+print_levels(
+  struct node* n
+) {
+  int** rows = calloc(10, sizeof void*);
+  int* cols = calloc(10, sizeof int);
 
   for (int i = 0; i < 10; ++i) {
-    rows[i] = calloc(10, sizeof(int));
+    rows[i] = calloc(10, sizeof int);
   }
 
   print_level_by_level(n, rows, cols, 0);
@@ -122,7 +151,11 @@ void print_levels(struct node* n) {
   free(cols);
 }
 
-void root_to_leaves(struct node* n, stack_int_t* stack) {
+void 
+root_to_leaves(
+  struct node* n, 
+  stack_int_t* stack
+) {
   if (!n) {
     return;
   }
@@ -139,7 +172,10 @@ void root_to_leaves(struct node* n, stack_int_t* stack) {
   stack_int_pop(stack);
 }
 
-int main(void) {
+int 
+main(
+  void
+) {
   struct node* root = new_node(1);
 
   root->l = new_node(2);
