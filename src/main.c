@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "stack_int.h"
 
-struct node{
+struct node {
   int v;
   struct node* l;
   struct node* r;
@@ -14,7 +14,7 @@ struct node*
 new_node(
   int v
 ) {
-  struct node* n = malloc(sizeof struct node);
+  struct node* n = malloc(sizeof(struct node));
 
   n->v = v;
   n->l = NULL;
@@ -120,11 +120,11 @@ void
 print_levels(
   struct node* n
 ) {
-  int** rows = calloc(10, sizeof void*);
-  int* cols = calloc(10, sizeof int);
+  int** rows = calloc(10, sizeof(void*));
+  int* cols = calloc(10, sizeof(int));
 
   for (int i = 0; i < 10; ++i) {
-    rows[i] = calloc(10, sizeof int);
+    rows[i] = calloc(10, sizeof(int));
   }
 
   print_level_by_level(n, rows, cols, 0);
