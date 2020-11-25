@@ -5,120 +5,114 @@
 #include "stack_int.h"
 
 struct node {
-  int v;
-  struct node* l;
-  struct node* r;
+  int value;
+  struct node* left;
+  struct node* right;
 };
 
 struct node*
 new_node(
-  int v
+  int value
 ) {
-  struct node* n = malloc(sizeof(struct node));
+  struct node* node = malloc(sizeof(struct node));
 
-  n->v = v;
-  n->l = NULL;
-  n->r = NULL;
+  node->value = value;
+  node->left = NULL;
+  node->right = NULL;
 
-  return n;
+  return node;
 }
 
 void
 print_pre_order(
-  struct node* n
+  struct node* node
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
 
-  printf("%d ", n->v);
-  print_pre_order(n->l);
-  print_pre_order(n->r);
+  printf("%d ", node->value);
+  print_pre_order(node->left);
+  print_pre_order(node->right);
 }
 
 void
 print_in_order(
-  struct node* n
+  struct node* node
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
 
-  print_in_order(n->l);
-  printf("%d ", n->v);
-  print_in_order(n->r);
+  print_in_order(node->left);
+  printf("%d ", node->value);
+  print_in_order(node->right);
 }
 
 void
 print_post_order(
-  struct node* n
+  struct node* node
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
 
-  print_post_order(n->l);
-  print_post_order(n->r);
-  printf("%d ", n->v);
+  print_post_order(node->left);
+  print_post_order(node->right);
+  printf("%d ", node->value);
 }
 
 void
 delete_node(
-  struct node* n
+  struct node* node
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
 
-  delete_node(n->l);
-  delete_node(n->r);
+  delete_node(node->left);
+  delete_node(node->right);
 
-  free(n);
-}
-
-bool
-does_have_children(
-  struct node* n
-) {
-  return n != NULL && (n->l || n->r);
+  free(node);
 }
 
 size_t
 get_height(
-  struct node* n
+  struct node* node
 ) {
-  if (!n) {
+  if (!node) {
     return 0;
   }
 
-  size_t l_h = get_height(n->l);
-  size_t r_h = get_height(n->r);
+  size_t left_height = get_height(node->left);
+  size_t right_height = get_height(node->right);
 
-  return l_h > r_h ? l_h + 1 : r_h + 1;
+  return left_height > right_height ?
+    left_height + 1 : right_height + 1;
 }
 
 void
 print_level_by_level(
-  struct node* n,
+  struct node* node,
   int** rows,
   int* cols,
   size_t lvl
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
 
   lvl++;
 
-  print_level_by_level(n->l, rows, cols, lvl);
-  print_level_by_level(n->r, rows, cols, lvl);
+  print_level_by_level(node->left, rows, cols, lvl);
+  print_level_by_level(node->right, rows, cols, lvl);
 
-  rows[lvl - 1][cols[lvl - 1]++] = n->v;
+  rows[lvl - 1][cols[lvl - 1]++] = node->value;
 }
 
 void
 print_levels(
-  struct node* n
+  struct node* node
 ) {
   int** rows = calloc(10, sizeof(void*));
   int* cols = calloc(10, sizeof(int));
@@ -127,7 +121,7 @@ print_levels(
     rows[i] = calloc(10, sizeof(int));
   }
 
-  print_level_by_level(n, rows, cols, 0);
+  print_level_by_level(node, rows, cols, 0);
 
   for (int i = 0; i < 10; ++i) {
     printf("%-2d - ", i + 1);
@@ -153,57 +147,57 @@ print_levels(
 
 void
 root_to_leaves(
-  struct node* n,
+  struct node* node,
   stack_int_t* stack
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
 
-  stack_int_push(stack, n->v);
+  stack_int_push(stack, node->value);
 
-  if (!n->l && !n->r) {
+  if (!node->left && !node->right) {
     stack_int_print_reverse(stack);
   }
 
-  root_to_leaves(n->l, stack);
-  root_to_leaves(n->r, stack);
+  root_to_leaves(node->left, stack);
+  root_to_leaves(node->right, stack);
 
   stack_int_pop(stack);
 }
 
 void
 dfs(
-  struct node* n,
+  struct node* node,
   size_t* max_depth,
   size_t depth,
   int* sum
 ) {
-  if (!n) {
+  if (!node) {
     return;
   }
   
-  dfs(n->l, max_depth, depth + 1, sum);
-  dfs(n->r, max_depth, depth + 1, sum);
+  dfs(node->left, max_depth, depth + 1, sum);
+  dfs(node->right, max_depth, depth + 1, sum);
 
-  if (!n->l && !n->r) {
+  if (!node->left && !node->right) {
     if (depth > *max_depth) {
       *max_depth = depth;
-      *sum = n->v;
+      *sum = node->value;
     } else if (depth == *max_depth) {
-      *sum += n->v;
+      *sum += node->value;
     }
   }
 }
 
 int
 deepest_leaves_sum(
-  struct node* n
+  struct node* node
 ) {
   int sum = 0;
   size_t max_depth = 0;
 
-  dfs(n, &max_depth, 1, &sum);
+  dfs(node, &max_depth, 1, &sum);
 
   return sum;
 }
@@ -214,22 +208,22 @@ main(
 ) {
   struct node* root = new_node(1);
 
-  root->l = new_node(2);
-  root->r = new_node(3);
+  root->left = new_node(2);
+  root->right = new_node(3);
 
-  root->l->l = new_node(4);
-  root->l->r = new_node(7);
+  root->left->left = new_node(4);
+  root->left->right = new_node(7);
 
-  root->r->r = new_node(12);
+  root->right->right = new_node(12);
 
-  root->l->l->l = new_node(5);
-  root->l->l->r = new_node(6);
+  root->left->left->left = new_node(5);
+  root->left->left->right = new_node(6);
 
-  root->l->l->r->l = new_node(8);
-  root->l->l->r->r = new_node(9);
+  root->left->left->right->left = new_node(8);
+  root->left->left->right->right = new_node(9);
 
-  root->l->l->r->r->r = new_node(10);
-  root->l->l->r->l->r = new_node(14);
+  root->left->left->right->right->right = new_node(10);
+  root->left->left->right->left->right = new_node(14);
 
   printf("dls: %d\n", deepest_leaves_sum(root));
 
