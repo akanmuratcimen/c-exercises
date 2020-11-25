@@ -172,6 +172,42 @@ root_to_leaves(
   stack_int_pop(stack);
 }
 
+void
+dfs(
+  struct node* n,
+  size_t* max_depth,
+  size_t depth,
+  int* sum
+) {
+  if (!n) {
+    return;
+  }
+  
+  dfs(n->l, max_depth, depth + 1, sum);
+  dfs(n->r, max_depth, depth + 1, sum);
+
+  if (!n->l && !n->r) {
+    if (depth > *max_depth) {
+      *max_depth = depth;
+      *sum = n->v;
+    } else if (depth == *max_depth) {
+      *sum += n->v;
+    }
+  }
+}
+
+int
+deepest_leaves_sum(
+  struct node* n
+) {
+  int sum = 0;
+  size_t max_depth = 0;
+
+  dfs(n, &max_depth, 1, &sum);
+
+  return sum;
+}
+
 int
 main(
   void
@@ -193,10 +229,9 @@ main(
   root->l->l->r->r = new_node(9);
 
   root->l->l->r->r->r = new_node(10);
+  root->l->l->r->l->r = new_node(14);
 
-  stack_int_t* rtl_stack = stack_int_initialize(20);
-  root_to_leaves(root, rtl_stack);
-  stack_int_clear(&rtl_stack);
+  printf("dls: %d\n", deepest_leaves_sum(root));
 
   delete_node(root);
 
