@@ -4,13 +4,13 @@
 #include <stdbool.h>
 #include "stack_int.h"
 
-struct node {
+struct node{
   int v;
   struct node* l;
   struct node* r;
 };
 
-struct node* 
+struct node*
 new_node(
   int v
 ) {
@@ -23,7 +23,7 @@ new_node(
   return n;
 }
 
-void 
+void
 print_pre_order(
   struct node* n
 ) {
@@ -36,7 +36,7 @@ print_pre_order(
   print_pre_order(n->r);
 }
 
-void 
+void
 print_in_order(
   struct node* n
 ) {
@@ -49,7 +49,7 @@ print_in_order(
   print_in_order(n->r);
 }
 
-void 
+void
 print_post_order(
   struct node* n
 ) {
@@ -62,7 +62,7 @@ print_post_order(
   printf("%d ", n->v);
 }
 
-void 
+void
 delete_node(
   struct node* n
 ) {
@@ -72,18 +72,18 @@ delete_node(
 
   delete_node(n->l);
   delete_node(n->r);
-  
+
   free(n);
 }
 
-bool 
+bool
 does_have_children(
   struct node* n
 ) {
   return n != NULL && (n->l || n->r);
 }
 
-size_t 
+size_t
 get_height(
   struct node* n
 ) {
@@ -97,11 +97,11 @@ get_height(
   return l_h > r_h ? l_h + 1 : r_h + 1;
 }
 
-void 
+void
 print_level_by_level(
-  struct node* n, 
-  int** rows, 
-  int* cols, 
+  struct node* n,
+  int** rows,
+  int* cols,
   size_t lvl
 ) {
   if (!n) {
@@ -116,7 +116,7 @@ print_level_by_level(
   rows[lvl - 1][cols[lvl - 1]++] = n->v;
 }
 
-void 
+void
 print_levels(
   struct node* n
 ) {
@@ -151,9 +151,9 @@ print_levels(
   free(cols);
 }
 
-void 
+void
 root_to_leaves(
-  struct node* n, 
+  struct node* n,
   stack_int_t* stack
 ) {
   if (!n) {
@@ -172,7 +172,7 @@ root_to_leaves(
   stack_int_pop(stack);
 }
 
-int 
+int
 main(
   void
 ) {
@@ -193,7 +193,7 @@ main(
   root->l->l->r->r = new_node(9);
 
   root->l->l->r->r->r = new_node(10);
-  
+
   stack_int_t* rtl_stack = stack_int_initialize(20);
   root_to_leaves(root, rtl_stack);
   stack_int_clear(&rtl_stack);
@@ -202,3 +202,4 @@ main(
 
   return EXIT_SUCCESS;
 }
+
