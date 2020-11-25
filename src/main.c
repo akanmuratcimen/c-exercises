@@ -102,12 +102,10 @@ print_level_by_level(
     return;
   }
 
-  lvl++;
+  print_level_by_level(node->left, rows, cols, lvl + 1);
+  print_level_by_level(node->right, rows, cols, lvl + 1);
 
-  print_level_by_level(node->left, rows, cols, lvl);
-  print_level_by_level(node->right, rows, cols, lvl);
-
-  rows[lvl - 1][cols[lvl - 1]++] = node->value;
+  rows[lvl][cols[lvl]++] = node->value;
 }
 
 void
@@ -225,7 +223,7 @@ main(
   root->left->left->right->right->right = new_node(10);
   root->left->left->right->left->right = new_node(14);
 
-  printf("dls: %d\n", deepest_leaves_sum(root));
+  print_levels(root);
 
   delete_node(root);
 
