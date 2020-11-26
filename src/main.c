@@ -12,7 +12,7 @@ struct node {
 
 struct node*
 new_node(
-  int value
+  const int value
 ) {
   struct node* node = malloc(sizeof(struct node));
 
@@ -25,7 +25,7 @@ new_node(
 
 void
 print_pre_order(
-  struct node* node
+  const struct node *const node
 ) {
   if (!node) {
     return;
@@ -38,7 +38,7 @@ print_pre_order(
 
 void
 print_in_order(
-  struct node* node
+  const struct node *const node
 ) {
   if (!node) {
     return;
@@ -51,7 +51,7 @@ print_in_order(
 
 void
 print_post_order(
-  struct node* node
+  const struct node *const node
 ) {
   if (!node) {
     return;
@@ -64,7 +64,7 @@ print_post_order(
 
 void
 delete_node(
-  struct node* node
+  struct node *const node
 ) {
   if (!node) {
     return;
@@ -78,7 +78,7 @@ delete_node(
 
 size_t
 get_height(
-  struct node* node
+  const struct node *const node
 ) {
   if (!node) {
     return 0;
@@ -93,10 +93,10 @@ get_height(
 
 void
 print_level_by_level(
-  struct node* node,
-  int** rows,
-  int* cols,
-  size_t lvl
+  const struct node *const node,
+  int *const *const rows,
+  int *const cols,
+  const size_t lvl
 ) {
   if (!node) {
     return;
@@ -110,7 +110,7 @@ print_level_by_level(
 
 void
 print_levels(
-  struct node* node
+  const struct node *const node
 ) {
   int** rows = calloc(10, sizeof(void*));
   int* cols = calloc(10, sizeof(int));
@@ -145,8 +145,8 @@ print_levels(
 
 void
 root_to_leaves(
-  struct node* node,
-  stack_int_t* stack
+  const struct node *const node,
+  stack_int_t *const stack
 ) {
   if (!node) {
     return;
@@ -166,10 +166,10 @@ root_to_leaves(
 
 void
 dfs(
-  struct node* node,
-  size_t* max_depth,
-  size_t depth,
-  int* sum
+  const struct node *const node,
+  size_t *const max_depth,
+  const size_t depth,
+  int *const sum
 ) {
   if (!node) {
     return;
@@ -190,7 +190,7 @@ dfs(
 
 int
 deepest_leaves_sum(
-  struct node* node
+  const struct node *const node
 ) {
   int sum = 0;
   size_t max_depth = 0;
